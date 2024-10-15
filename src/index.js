@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import Footer from './components/common/Footer';
 import Navbar from './components/common/Navbar';
+import TopSection from './components/TopSection';
 
 // import reportWebVitals from './reportWebVitals';
 
@@ -14,7 +15,7 @@ root.render(
     <BrowserRouter>
       <Navbar />
     </BrowserRouter>
-
+    <TopSection />
 
     {/* 
     <App />
