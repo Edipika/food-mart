@@ -21,11 +21,10 @@ const Card = ({ title, subtitle, imageUrl }) => {
                 />
             </div>
         </div>
-
     );
 };
 
-function TopSection() {
+function HeroSection() {
     return (
         <>
             <div className="grid grid-cols-5 grid-rows-2  w-4/5 h-[80vh] mx-auto my-9 gap-5 place-items-center ">
@@ -69,5 +68,5 @@ function TopSection() {
     );
 }
 
-export default TopSection;
+export default HeroSection;
 

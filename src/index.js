@@ -4,8 +4,9 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import Footer from './components/common/Footer';
-import Navbar from './components/common/Navbar';
-import TopSection from './components/TopSection';
+import Header from './components/common/Header';
+import HeroSection from './components/HeroSection';
+import CategoryCard from './components/CategoryCard';
 
 // import reportWebVitals from './reportWebVitals';
 
@@ -13,13 +14,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Navbar />
+      <Header />
     </BrowserRouter>
-    <TopSection />
+    <HeroSection />
+    <CategoryCard />
+    <Footer />
 
     {/* 
     <App />
-    <Footer /> */}
+    */}
   </React.StrictMode>
 );
 
@@ -27,6 +30,9 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals();
+
+
+
 
 
 
