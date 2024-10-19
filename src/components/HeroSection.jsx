@@ -47,9 +47,9 @@ function HeroSection() {
                             </button>
                         </div>
 
-                        <div className="absolute right-1 flex-shrink-0 mt-24">
+                        <div className="absolute right-0 bottom-0 flex-shrink-0 w-1/2 h-auto ">
                             <img
-                                className=""
+                                 className="object-contain w-full h-full"
                                 src={Smothie}
                                 alt="Juices"
                             />
