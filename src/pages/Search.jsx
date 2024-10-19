@@ -17,6 +17,8 @@ const SearchPage = () => {
               </div>
             ))}
 
+
+
           </div>
 
           {/* item section */}
