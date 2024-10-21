@@ -1,6 +1,7 @@
 import SearchPage from "./pages/Search";
 import HomePage from "./pages/HomePage";
 import {createBrowserRouter} from "react-router-dom";
+import AddCategory from "./admin/AddCategory";
 
 const routes = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const routes = createBrowserRouter([
   {
     path: "/search",
     element:<SearchPage/>
+  },
+  {
+    path: "/addCategory",
+    element:<AddCategory/>
   },
 ]);
 
