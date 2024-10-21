@@ -1,4 +1,44 @@
 function AddCategory() {
+    const [category, setCategory] = useState({
+        name: '',
+        description: '',
+        image_path: '',
+      });
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCategory((prevCategory) => ({
+          ...prevCategory,
+          [name]: value,
+        }));
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch('http://localhost:5000/api/categories', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(category),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          const data = await response.json();
+          console.log('Category added:', data);
+    
+          // Reset the form after successful submission
+          setCategory({ name: '', description: '', image_path: '' });
+        } catch (error) {
+          console.error('Error adding category:', error);
+        }
+      };
+    
+
 
     return (
         <>
