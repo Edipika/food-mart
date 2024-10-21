@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 function AddCategory() {
     const [category, setCategory] = useState({
         name: '',
@@ -5,8 +6,13 @@ function AddCategory() {
         image_path: '',
       });
     
+      useEffect(() => {
+        console.log('Updated category state:', category);
+      }, [category]);
+      
       const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log('Previous category state:', category);
         setCategory((prevCategory) => ({
           ...prevCategory,
           [name]: value,
