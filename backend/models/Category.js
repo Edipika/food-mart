@@ -1,5 +1,5 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Adjust the path as necessary
+const { Model, DataTypes, Sequelize  } = require('sequelize');
+const sequelize = require('../config/database'); 
 
 class Category extends Model {}
 
@@ -19,17 +19,17 @@ Category.init({
   },
   image_path: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
   },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+    defaultValue: Sequelize.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: DataTypes.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    defaultValue: Sequelize.NOW,
   },
 }, {
   sequelize,
