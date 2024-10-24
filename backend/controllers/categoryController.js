@@ -2,8 +2,8 @@ const { Category } = require('../models'); // Adjust the path as necessary
 
 const addCategory = async (req, res) => {
     try {
-        console.log('Form data:', req.body);
-        const { name, description } = req.body;
+        // console.log('Form data:', req.body);
+        const { name, description , image} = req.body;
 
         // Validation
         if (!name || typeof name !== 'string' || name.trim() === '') {
