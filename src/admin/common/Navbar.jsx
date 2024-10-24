@@ -24,7 +24,7 @@ function Navbar() {
                 <p className="mr-5 mt-2 text-gray-900">Logout</p>
             </div>
         </>
-    );
+    ); 
 }
 
 export default Navbar;
