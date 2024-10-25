@@ -36,9 +36,9 @@ function AddCategory() {
     try {
       const response = await fetch('http://localhost:5000/categories/add', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
         body: formData,
         // body:JSON.stringify(category),
       });

@@ -2,7 +2,7 @@ import SearchPage from "./pages/Search";
 import HomePage from "./pages/HomePage";
 import {createBrowserRouter} from "react-router-dom";
 import AddCategory from "./admin/AddCategory";
-import Navbar from "./admin/common/Navbar";
+import Login from "./admin/Pages/Login"
 
 const routes = createBrowserRouter([
   {
@@ -20,6 +20,10 @@ const routes = createBrowserRouter([
   {
     path: "/admin",
     element: <AddCategory/>
+  },
+  {
+    path: "/adminLogin",
+    element: <Login/>
   },
 ]);
 
