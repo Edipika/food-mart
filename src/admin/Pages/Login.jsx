@@ -1,39 +1,58 @@
+import React from 'react';
+import { useState } from 'react';
 
-import React, { useState } from 'react';
 
-const Login = () => {
+function Login() {
+    const [login, setLogin] = useState({
+        email: '',
+        password: '',
+    });
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false);
+
+    const handleClick = (e) => {
+        const { name, value } = e.target;
+        setLogin((prevLogin) => ({
+            ...prevLogin,
+            [name]: value
+        }));
+    }
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/auth/login', { // Adjust the URL to your server
+            const response = await fetch('http://localhost:5000/api/adminLogin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: email, password }), // Sending username as email
+                body: JSON.stringify(login),
             });
 
             const data = await response.json();
-
-            if (response.ok) {
-                console.log('Login successful', data.token);
-                localStorage.setItem('authToken', data.token);
-            } else {
-              
-                setErrorMessage(data.message || 'Login failed');
+            // ok = (status in the range 200-299)
+            if (!response.ok) {
+                setIsError(true); // Set error state
+                setMessage(data.error || 'Something went wrong.'); // Display error message
+                return;
             }
+
+            // console.log('Category added:', data);
+            setIsError(false); // Reset error state
+            setMessage(data.message);
+
+            // Reset the form after successful submission
+            setLogin({
+                email: '',
+                password: ''
+            });
         } catch (error) {
-            console.error('Error during login:', error);
-            setErrorMessage('An error occurred. Please try again later.');
+            console.error('Error adding user :', error);
         }
-    };
-  
+
+    }
+
     return (
         <div className="h-screen w-full bg-gray-950 flex justify-center items-center">
             <div className="w-1/4 bg-slate-300 flex flex-col justify-center items-center p-6 rounded-lg shadow-lg">
@@ -45,6 +64,8 @@ const Login = () => {
                             type="email"
                             name="email"
                             id="email"
+                            onChange={handleClick}
+                            value={login.email}
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)} // Update email state
@@ -58,6 +79,8 @@ const Login = () => {
                             type="password"
                             name="password"
                             id="password"
+                            onChange={handleClick}
+                            value={login.password}
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)} // Update password state
@@ -74,8 +97,14 @@ const Login = () => {
                     </button>
                 </form>
             </div>
+            {/* Displaying the message */}
+            {message && (
+                <div >
+                    {message}
+                </div>
+            )}
         </div>
     );
-};
+}
 
 export default Login;
