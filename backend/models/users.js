@@ -1,7 +1,5 @@
-// const bcrypt = require('bcryptjs'); 
-
 module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define('user', {
+    const User = sequelize.define('User', {
         // Define your model attributes here
         id: {
             type: DataTypes.INTEGER,
@@ -40,15 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false,
         tableName: 'users',      // Explicitly specify the table name
-        freezeTableName: true,   // Disable pluralization
-        // hooks: {
-        //     beforeSave: async (user) => {
-        //         if (user.changed('password')) {  // Only hash if the password has changed
-        //             user.password = await bcrypt.hash(user.password, 10);
-        //         }
-        //     },
-        // },
-    });
-
-    return Users;
-};
+        freezeTableName: true,       // Disable pluralization
+      });
+    
+      return User;
+    };

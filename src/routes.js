@@ -1,7 +1,9 @@
 import SearchPage from "./pages/Search";
 import HomePage from "./pages/HomePage";
 import {createBrowserRouter} from "react-router-dom";
-import AddCategory from "./admin/AddCategory";
+import AddCategory from "./admin/Pages/AddCategory";
+import AddProduct from "./admin/Pages/AddProduct";
+
 import Login from "./admin/Pages/Login"
 
 const routes = createBrowserRouter([
@@ -18,12 +20,16 @@ const routes = createBrowserRouter([
     element:<AddCategory/>
   },
   {
-    path: "/admin",
+    path: "/addCategory",
     element: <AddCategory/>
   },
   {
     path: "/adminLogin",
     element: <Login/>
+  },
+  {
+    path: "/addProduct",
+    element: <AddProduct/>
   },
 ]);
 
