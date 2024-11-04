@@ -5,11 +5,11 @@ const JWT_SECRET = '54^%8687%';
 const adminlogin = async (req, res) => {
     try {
 
-        console.log("inside admin login");
+        // console.log("inside admin login");
         const { email, password } = req.body;
         // Check if user with provided email exists
         const user = await User.findOne({ where: { email: email, } });
-        console.log(user);
+        // console.log(user);
 
         if (!user && user.role!=2) {
             return res.status(404).json({
@@ -43,7 +43,7 @@ const adminlogin = async (req, res) => {
     } catch (error) {
         console.error('Error Occured:', error);
         return res.status(500).json({
-            error: 'An error occurred while Logging In',
+            message: 'An error occurred while Logging In',
         });
     }
 };
@@ -53,24 +53,4 @@ module.exports = {
      adminlogin
 };
 
-// const userlogin = async (req, res) => {
-//     try {
 
-//         const { email, password } = req.body;
-//         const login = await User.create({
-//             email: email,
-//             password: password,
-//             role:2,
-//         });
-//         return res.status(201).json({
-//             success: true,
-//             message: ' added successfully!',
-//         });
-
-//     } catch (error) {
-//         console.error('Error Occured:', error);
-//         return res.status(500).json({
-//             error: 'An error occurred while Logging In',
-//         });
-//     }
-// };

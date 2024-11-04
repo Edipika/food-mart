@@ -23,7 +23,6 @@ function AddCategory() {
     // console.log('category image:', selectedFile );
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -68,36 +67,6 @@ function AddCategory() {
   return (
     <>
       <Layout>
-        {/* <div className='bg-slate-500 h-5/6 m-10'>
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <label htmlFor="name">Enter Category Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={category.name}
-              onChange={handleChange}
-            />
-
-            <label htmlFor="description">Enter Description:</label>
-            <input
-              type="text"
-              name="description"
-              value={category.description}
-              onChange={handleChange}
-            />
-
-            <label htmlFor="image">Upload Image:</label>
-            <input type="file" name="image" onChange={handleFileChange} />
-
-            <button type="submit">Add Category</button>
-          </form>
-
-          {message && (
-            <div >
-              {message}
-            </div>
-          )}
-        </div> */}
         <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
           <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col space-y-4">
             <div className="flex flex-col">
@@ -162,5 +131,5 @@ function AddCategory() {
 }
 
 export default AddCategory;
-// className={`message ${isError ? 'error' : 'success'}`}
+
 

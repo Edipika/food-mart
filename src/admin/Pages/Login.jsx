@@ -34,9 +34,12 @@ function Login() {
             // ok = (status in the range 200-299)
             if (!response.ok) {
                 setIsError(true); // Set error state
-                setMessage(data.error || 'Something went wrong.'); // Display error message
+                setMessage(data.message || 'Something went wrong.'); // Display error message
                 return;
             }
+
+            const { token } = data; // Destructure the token from the response
+            localStorage.setItem('token', token);
 
             // console.log('Category added:', data);
             setIsError(false); // Reset error state
@@ -67,8 +70,6 @@ function Login() {
                             onChange={handleClick}
                             value={login.email}
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)} // Update email state
                             className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
                             placeholder="example@example.com"
                         />
@@ -82,27 +83,29 @@ function Login() {
                             onChange={handleClick}
                             value={login.password}
                             required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)} // Update password state
                             className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
                             placeholder="********"
                         />
                     </div>
-                    {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>} {/* Error message */}
                     <button
                         type="submit"
                         className="w-full p-2 bg-gray-950 text-slate-300 rounded-md hover:bg-gray-800 transition duration-200"
                     >
                         Submit
                     </button>
+                    {message && (
+                    <div className={`mt-4 text-center p-2 rounded-md ${isError ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}>
+                        {message}
+                    </div>
+                )}
                 </form>
             </div>
             {/* Displaying the message */}
-            {message && (
-                <div >
+            {/* {message && (
+                <div className=''>
                     {message}
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

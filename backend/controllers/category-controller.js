@@ -60,33 +60,25 @@ const addCategory = async (req, res) => {
     }
 };
 
-// const login = async (req, res) => {
-//     try {
-
-//         const { email, password } = req.body;
-//         const login = await User.create({
-//             email: email,
-//             password: password,
-//             role:2,
-//         });
-//         return res.status(201).json({
-//             success: true,
-//             message: ' added successfully!',
-//         });
-
-//     } catch (error) {
-//         console.error('Error Occured:', error);
-//         return res.status(500).json({
-//             error: 'An error occurred while Logging In',
-//         });
-//     }
-// };
-
 const UpdateCategory = (req, res) => {
 };
+
 const deleteCategory = (req, res) => {
+    console.log("Request Body:", req.body);
+    const { categoryId } = req.body;
+
 };
-const showCategories = (req, res) => {
+
+const showCategories = async (req, res) => {
+    try {
+      
+        const categories = await Category.findAll();
+        res.json(categories);
+
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).send('Server Error');
+    }
 };
 
 module.exports = {
