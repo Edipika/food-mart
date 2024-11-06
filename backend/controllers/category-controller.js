@@ -63,15 +63,45 @@ const addCategory = async (req, res) => {
 const UpdateCategory = (req, res) => {
 };
 
-const deleteCategory = (req, res) => {
-    console.log("Request Body:", req.body);
+const GetCategory = (req, res) => {
+};
+
+const deleteCategory = async (req, res) => {
     const { categoryId } = req.body;
+    if (!categoryId) {
+        return res.status(400).json({ message: 'Category ID is required' });
+    }
+    try {
+        const category = await Category.findByPk(categoryId);
+        console.log("Category:", category);
+
+        if (!category) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+        const categoryDir = path.join(__dirname,'..',`uploads/categories/${categoryId}`);
+        console.log(`Category exists: ${categoryDir}`);
+
+        if (fs.existsSync(categoryDir)) {
+            console.log(`Category exists: ${categoryDir}`);
+            fs.rmSync(categoryDir, { recursive: true, force: true });
+            console.log(`Category folder deleted: ${categoryDir}`);
+        } else {
+            console.log('Category folder does not exist.');
+        }
+        await category.destroy();
+
+        return res.status(200).json({ message: 'Category deleted successfully' });
+
+    } catch (error) {
+        console.error("Error deleting category:", error);
+        res.status(500).json({ message: 'An error occurred while deleting the category' });
+    }
 
 };
 
 const showCategories = async (req, res) => {
     try {
-      
+
         const categories = await Category.findAll();
         res.json(categories);
 
@@ -82,5 +112,5 @@ const showCategories = async (req, res) => {
 };
 
 module.exports = {
-    addCategory, UpdateCategory, deleteCategory, showCategories
+    addCategory, UpdateCategory, deleteCategory, showCategories, GetCategory
 };
