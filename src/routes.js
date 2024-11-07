@@ -30,7 +30,7 @@ const routes = createBrowserRouter([
     element: <Login/>
   },
   {
-    path: "/categoryList",
+    path: "/category",
     element: <CategoryParent/>
   },
   {

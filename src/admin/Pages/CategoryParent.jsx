@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Layout from '../common/Layout';
 import AddCategory from './AddCategory';
-import CategoryList from './CategoryList'
+import CategoryList from './CategoryList';
 
 function CategoryParent() {
-    const [isEditing, setIsEditing] = useState(false); // Track if editing mode is on
+    const [isEditing, setIsEditing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    console.log("Is Editing:", isEditing);
-    console.log("Selected Category:", selectedCategory);
+
+    const handleEditClick = (category) => {
+        setSelectedCategory(category);
+        setIsEditing(true);
+    };
+
+    const handleCancelEdit = () => {
+        setSelectedCategory(null);
+        setIsEditing(false);
+    };
 
     return (
-        <>
-            <Layout>
-                {isEditing ? (
-                    <AddCategory
-                        existingCategory={selectedCategory}
-                        onCancel={() => setIsEditing(false)}
-                    />
-                ) : (
-                    <CategoryList
-                        setSelectedCategory={setSelectedCategory}
-                        setIsEditing={setIsEditing}
-                    />
-                )}
-            </Layout >
-        </>
+        <Layout>
+            {isEditing ? (
+                <AddCategory
+                    existingCategory={selectedCategory}
+                    onCancel={handleCancelEdit} // Back button action
+                />
+            ) : (
+                <CategoryList
+                    onEditClick={handleEditClick} // Pass edit function
+                />
+            )}
+        </Layout>
     );
 }
 
 export default CategoryParent;
-
-
