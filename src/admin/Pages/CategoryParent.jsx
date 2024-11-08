@@ -16,7 +16,11 @@ function CategoryParent() {
         setSelectedCategory(null);
         setIsEditing(false);
     };
-
+    const onAddClick=()=>{
+        setSelectedCategory(null); 
+        setIsEditing(true);
+    }
+ 
     return (
         <Layout>
             {isEditing ? (
@@ -27,6 +31,7 @@ function CategoryParent() {
             ) : (
                 <CategoryList
                     onEditClick={handleEditClick} // Pass edit function
+                    onAddClick={onAddClick} // Pass add function
                 />
             )}
         </Layout>

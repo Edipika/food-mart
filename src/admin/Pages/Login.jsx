@@ -1,8 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {login} from '../../slice/authSlice'
+
 
 
 function Login() {
+    const dispatch = useDispatch();
     const [login, setLogin] = useState({
         email: '',
         password: '',
@@ -40,6 +44,8 @@ function Login() {
 
             const { token } = data; // Destructure the token from the response
             localStorage.setItem('token', token);
+
+            dispatch
 
             // console.log('Category added:', data);
             setIsError(false); // Reset error state
