@@ -29,7 +29,7 @@ const adminlogin = async (req, res) => {
         const token = jwt.sign(
             { userId: user.id, role: user.role },
             JWT_SECRET,
-           
+            { expiresIn: '5s' }
         );
 
         // Return token to client

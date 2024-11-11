@@ -2,12 +2,19 @@ import { CgProfile } from "react-icons/cg";
 import { MdPerson } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import React, { useState } from 'react';
+import { useSelector } from "react-redux";
+// import {removeUser} from '../../slice/authSlice'
 
 
 function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    
+    const userEmail = useSelector(state => state.user.name);
+    const status = useSelector(state => state.user.isLoggedIn);
 
-    // Toggle dropdown visibility
+    // console.log(status)
+    // console.log(userEmail)
+
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
     };
@@ -18,7 +25,8 @@ function Navbar() {
                     <button onClick={toggleDropdown}>
                         <div className="flex">
                             <CgProfile className="m-2 text-gray-900" size={26} />
-                            <p className="mr-5 mt-2 text-gray-900">Admin</p>
+                            {/* <p className="mr-5 mt-2 text-gray-900">Admin</p> */}
+                            <p className="mr-5 mt-2 text-gray-900">{userEmail || "Admin"}</p> {/* Display email */}
                         </div>
                     </button>
                 </div>

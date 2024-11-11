@@ -21,17 +21,17 @@ const routes = createBrowserRouter([
   //   path: "/addCategory",
   //   element:<AddCategory/>
   // },
-  {
-    path: "/addCategory",
-    element: <ProtectedRoute element={AddCategory}/> 
-  },
+  // {
+  //   path: "/addCategory",
+  //   element: <ProtectedRoute element={AddCategory}/> 
+  // },
   {
     path: "/adminLogin",
     element: <Login/>
   },
   {
     path: "/category",
-    element: <CategoryParent/>
+    element:<ProtectedRoute element={CategoryParent}/> 
   },
   {
     path: "/addProduct",

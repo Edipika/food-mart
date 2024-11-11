@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function CategoryList({ onEditClick,onAddClick }) {
+function CategoryList({ onEditClick, onAddClick }) {
     const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState([]);
 

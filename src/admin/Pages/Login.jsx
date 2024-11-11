@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {login} from '../../slice/authSlice'
-
+import {setUser} from '../../slice/authSlice';
+import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
@@ -11,9 +12,10 @@ function Login() {
         email: '',
         password: '',
     });
-
+    const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const [isError, setIsError] = useState(false);
+    const { isLoggedIn, name } = useSelector((state) => state.user);
 
     const handleClick = (e) => {
         const { name, value } = e.target;
@@ -45,7 +47,7 @@ function Login() {
             const { token } = data; // Destructure the token from the response
             localStorage.setItem('token', token);
 
-            dispatch
+            dispatch(setUser(login.email))
 
             // console.log('Category added:', data);
             setIsError(false); // Reset error state
@@ -56,6 +58,8 @@ function Login() {
                 email: '',
                 password: ''
             });
+
+            navigate('/category');
         } catch (error) {
             console.error('Error adding user :', error);
         }

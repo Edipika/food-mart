@@ -9,6 +9,7 @@ const verifyToken = require('../middleware/jwtMiddleware');
 router.post('/adminLogin', adminlogin);
 router.get('/protected', verifyToken, showCategories);
 
+router.post('/verify-token', verifyToken,showCategories);
 router.get('/verify-token', verifyToken);
 // router.get('/adminLogin',adminlogin);
 
