@@ -59,7 +59,7 @@ function Login() {
                 password: ''
             });
 
-            navigate('/category');
+            // navigate('/category');
         } catch (error) {
             console.error('Error adding user :', error);
         }
