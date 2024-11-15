@@ -29,6 +29,10 @@ const routes = createBrowserRouter([
     path: "/adminLogin",
     element: <Login/>
   },
+  // {
+  //   path: "/category",
+  //   element:<CategoryParent/> 
+  // },
   {
     path: "/category",
     element:<ProtectedRoute element={CategoryParent}/> 

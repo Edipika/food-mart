@@ -13,20 +13,22 @@ const ProtectedRoute = ({ element: Component }) => {
             }
 
             try {
-                const response = await fetch('/api/verify-token', {  
+                const response = await fetch('http://localhost:5000/api/verify-token', {  
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
-                console.log(response);
+                console.log(response.status);
+                setIsValid(true);
   
             } catch (error) {
                 console.error('Error verifying token:', error);
                 setIsValid(false);
             }
         };
-
+        console.log("isvalid");
+        console.log("isvalid".isValid);
         verifyToken();
     }, [token]);
 
@@ -40,8 +42,10 @@ const ProtectedRoute = ({ element: Component }) => {
         return <Navigate to="/adminLogin" replace />;
     }
 
-    // If the token is valid, allow access to the component
+    //If the token is valid, allow access to the component
     return <Component />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute;  
+
+

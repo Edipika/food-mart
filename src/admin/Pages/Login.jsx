@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {setUser} from '../../slice/authSlice';
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 
 function Login() {
@@ -48,6 +49,7 @@ function Login() {
             localStorage.setItem('token', token);
 
             dispatch(setUser(login.email))
+           
 
             // console.log('Category added:', data);
             setIsError(false); // Reset error state
@@ -58,8 +60,10 @@ function Login() {
                 email: '',
                 password: ''
             });
-
-            // navigate('/category');
+            navigate('/category', { replace: true });
+            navigate('/category');
+            console.log('Successfully submitted');
+            // <Navigate to="/category" replace />;
         } catch (error) {
             console.error('Error adding user :', error);
         }

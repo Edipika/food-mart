@@ -2,6 +2,8 @@ const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = '54^%8687%';
 
+
+
 const adminlogin = async (req, res) => {
     try {
 
@@ -29,7 +31,7 @@ const adminlogin = async (req, res) => {
         const token = jwt.sign(
             { userId: user.id, role: user.role },
             JWT_SECRET,
-            { expiresIn: '5s' }
+            { expiresIn: '60s' }
         );
 
         // Return token to client
