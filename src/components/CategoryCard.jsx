@@ -17,6 +17,7 @@ function CategoryCard() {
                         <Link to="/search">
                             <img src={fruits} alt="Fruits" />
                         </Link>
+                        
                     </div>
                     <div className="col-span-2">
                         <img src={atta} alt="" />
