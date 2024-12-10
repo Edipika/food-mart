@@ -38,6 +38,7 @@ function Login() {
             });
 
             const data = await response.json();
+            console.log(data);
             // ok = (status in the range 200-299)
             if (!response.ok) {
                 setIsError(true); // Set error state
@@ -60,8 +61,8 @@ function Login() {
                 email: '',
                 password: ''
             });
-            navigate('/category', { replace: true });
-            navigate('/category');
+            // navigate('/category', { replace: true });
+            // navigate('/category');
             console.log('Successfully submitted');
             // <Navigate to="/category" replace />;
         } catch (error) {

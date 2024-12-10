@@ -7,6 +7,7 @@ import AddProduct from "./admin/Pages/AddProduct";
 import CategoryParent from "./admin/Pages/CategoryParent.jsx";
 
 import Login from "./admin/Pages/Login"
+import { AddAdmin } from "./admin/Pages/AddAdmin.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -29,10 +30,10 @@ const routes = createBrowserRouter([
     path: "/adminLogin",
     element: <Login/>
   },
-  // {
-  //   path: "/category",
-  //   element:<CategoryParent/> 
-  // },
+  {
+    path: "/adminRegistration",
+    element:<AddAdmin/> 
+  },
   {
     path: "/category",
     element:<ProtectedRoute element={CategoryParent}/> 

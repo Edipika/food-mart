@@ -4,48 +4,50 @@ import { Navigate } from 'react-router-dom';
 const ProtectedRoute = ({ element: Component }) => {
     const [isValid, setIsValid] = useState(false); // Track validity state
     const token = localStorage.getItem('token');
+    
+    console.log('outside Verifying token'.token);
 
     useEffect(() => {
-        const verifyToken = async () => {
+        const verifyToken =  () => {
             if (!token) {
                 setIsValid(false); // No token found
                 return;
             }
+            console.log('Verifying token'.token);
+            // try {
+            //     const response = await fetch('http://localhost:5000/api/verify-token', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Authorization': `Bearer ${token}`,
+            //         },
+            //     });
+            //     console.log(response.status);
+            //     setIsValid(true);
 
-            try {
-                const response = await fetch('http://localhost:5000/api/verify-token', {  
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-                console.log(response.status);
-                setIsValid(true);
-  
-            } catch (error) {
-                console.error('Error verifying token:', error);
-                setIsValid(false);
-            }
+            // } catch (error) {
+            //     console.error('Error verifying token:', error);
+            //     setIsValid(false);
+            // }
         };
-        console.log("isvalid");
-        console.log("isvalid".isValid);
+        // console.log("isvalid");
+        // console.log("isvalid".isValid);
         verifyToken();
     }, [token]);
 
-    console.log(isValid);
+    // console.log(isValid);
 
     // if (isValid === null) {
     //     return <div>Loading...</div>; // Optionally show a loading state
     // }
 
-    if (!isValid) {
-        return <Navigate to="/adminLogin" replace />;
-    }
+    // if (!isValid) {
+    //     return <Navigate to="/adminLogin" replace />;
+    // }
 
     //If the token is valid, allow access to the component
-    return <Component />;
+    // return <Component />;
 };
 
-export default ProtectedRoute;  
+export default ProtectedRoute;
 
 
