@@ -18,7 +18,6 @@ const SearchPage = () => {
                 <div className="font-semibold text-lg mt-5 ml-3">All</div>
               </div>
             ))}
-
           </div>
 
           {/* item section */}
