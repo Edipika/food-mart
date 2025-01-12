@@ -63,6 +63,7 @@ function AddCategory({ existingCategory, onCancel }) {
 
             const data = await response.json();
             // ok = (status in the range 200-299)
+            console.log(data);
             if (!response.ok) {
                 // const errorData = await response.json();
                 // throw new Error(errorData.error || 'Something went wrong');
