@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-
-function AddCategory({ existingCategory, onCancel }) {
+function AddCategory({ existingCategory, onSave, onCancel }) {
     const [category, setCategory] = useState({
         name: '',
         description: '',
@@ -12,6 +11,7 @@ function AddCategory({ existingCategory, onCancel }) {
         if (existingCategory) {
             console.log(existingCategory);
             setCategory({
+                categoryId: existingCategory.id || '', 
                 name: existingCategory.name || '',
                 description: existingCategory.description || '',
                 image: existingCategory.image_path || '',
@@ -31,61 +31,45 @@ function AddCategory({ existingCategory, onCancel }) {
         }));
     };
 
+    // const handleFileChange = (e) => {
+    //     setSelectedFile(e.target.files[0]); // Capture the selected file
+    //     // console.log('category image:', selectedFile );
+    // };
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]); // Capture the selected file
-        // console.log('category image:', selectedFile );
+        setCategory((prev) => ({
+            ...prev,
+            image: e.target.files[0],
+        }));
     };
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     onSave(category);
+    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
+        // Create a FormData object to handle the file upload properly
         const formData = new FormData();
         formData.append('name', category.name);
         formData.append('description', category.description);
+    
+        // If a new image is selected, append it to the form data
         if (selectedFile) {
-            formData.append('image', selectedFile); // Add the image file to the form data
+            formData.append('image', selectedFile);
+        } else if (category.image) {
+            // For an existing image, append the image path or file if needed
+            formData.append('image', category.image);
         }
-
-
-        const url = existingCategory
-            ? `http://localhost:5000/categories/delete` // Update URL if editing
-            : 'http://localhost:5000/categories/add'; // Add URL if creating new
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                // headers: {
-                //   'Content-Type': 'application/json',
-                // },
-                body: formData,
-                // body:JSON.stringify(category),
-            });
-
-            const data = await response.json();
-            // ok = (status in the range 200-299)
-            console.log(data);
-            if (!response.ok) {
-                // const errorData = await response.json();
-                // throw new Error(errorData.error || 'Something went wrong');
-                setIsError(true); // Set error state
-                setMessage(data.error || 'Something went wrong.'); // Display error message
-                return;
-            }
-
-            // console.log('Category added:', data);
-            setIsError(false); // Reset error state
-            setMessage(data.message);
-
-            // Reset the form after successful submission
-            setCategory({ name: '', description: '' });
-        } catch (error) {
-            console.error('Error adding category:', error);
+        if (existingCategory && existingCategory.id) {
+            formData.append('categoryId', existingCategory.id);
         }
+    
+        onSave(formData);  // Pass formData to the onSave function
     };
 
     return (
         <>
-
             <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
                 <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col space-y-4">
                     <div className="flex flex-col">
@@ -140,7 +124,7 @@ function AddCategory({ existingCategory, onCancel }) {
                             onChange={handleFileChange}
                             className="p-2  bg-gray-200 text-gray-900 border border-gray-400 rounded-md"
                         />
-                       
+
                     </div>
                     <div className='flex gap-3'>
                         <button

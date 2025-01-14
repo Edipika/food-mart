@@ -3,9 +3,11 @@ import { Routes, Route } from 'react-router-dom'
 import HomePage from "./pages/HomePage.jsx";
 import Login from "./features/auth/Login.jsx";
 import Register from './features/auth/Register.jsx';
-import  SearchPage from './pages/Search.jsx';
+import SearchPage from './pages/Search.jsx';
 import ProductDetails from './pages/ProductDetails.jsx';
-import AddCategory from './admin/Pages/AddCategory.jsx';
+import AddCategory from './features/category/CategoryForm.jsx';
+import CategoryParent from './features/category/CategoryParent.jsx';
+import CategoryList from './features/category/CategoryList.jsx';
 
 
 function App() {
@@ -19,8 +21,11 @@ function App() {
       <Route path="register" element={<Register />} />
       <Route path="search" element={<SearchPage />} />
       <Route path="productDetails" element={<ProductDetails />} />
-      <Route path="category" element={<AddCategory />} />
 
+      <Route path="category" element={<CategoryParent />} /> 
+      {/* <Route path="category" element={<AddCategory />} />
+      <Route path="categories" element={<CategoryList />} /> */}
+      
       {/* <Route element={<PersistLogin />}> */}
       {/* protected routes */}
       {/* <Route element={<RequireAuth />}>

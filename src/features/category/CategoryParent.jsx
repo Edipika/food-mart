@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import Layout from '../common/Layout';
-import AddCategory from './AddCategory';
-import CategoryList from './CategoryList';
+import Layout from '../../admin/common/Layout';
+import AddCategory from './CategoryForm';
+import CategoryList from './CategoryList'; 
+import { useAddCategoryMutation,useUpdateCategoryMutation } from './categoryApi';
 
 function CategoryParent() {
     const [isEditing, setIsEditing] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const [addCategory] = useAddCategoryMutation();
+    const [updateCategory] = useUpdateCategoryMutation();
 
     const handleEditClick = (category) => {
         setSelectedCategory(category);
@@ -16,16 +20,26 @@ function CategoryParent() {
         setSelectedCategory(null);
         setIsEditing(false);
     };
-    const onAddClick=()=>{
-        setSelectedCategory(null); 
+    const onAddClick = () => {
+        setSelectedCategory(null);
         setIsEditing(true);
     }
- 
+
+    const handleSaveCategory = async (category) => {
+        if (selectedCategory) {
+            await updateCategory(category); // Update existing category
+        } else {
+            await addCategory(category); // Add new category
+        }
+        setSelectedCategory(null); // Reset after saving
+    };
+
     return (
         <Layout>
             {isEditing ? (
                 <AddCategory
                     existingCategory={selectedCategory}
+                    onSave={handleSaveCategory}
                     onCancel={handleCancelEdit} // Back button action
                 />
             ) : (

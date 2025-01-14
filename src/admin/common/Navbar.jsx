@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
-    const userEmail = useSelector(state => state.user.name);
-    const status = useSelector(state => state.user.isLoggedIn);
+    // const userEmail = useSelector(state => state.user.name);
+    // const status = useSelector(state => state.user.isLoggedIn);
 
     // console.log(status)
     // console.log(userEmail)
@@ -26,7 +26,7 @@ function Navbar() {
                         <div className="flex">
                             <CgProfile className="m-2 text-gray-900" size={26} />
                             {/* <p className="mr-5 mt-2 text-gray-900">Admin</p> */}
-                            <p className="mr-5 mt-2 text-gray-900">{userEmail || "Admin"}</p> {/* Display email */}
+                            {/* <p className="mr-5 mt-2 text-gray-900">{userEmail || "Admin"}</p> Display email */}
                         </div>
                     </button>
                 </div>
