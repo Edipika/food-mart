@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+
+
 function SidePanel() {
 
     return (
@@ -7,10 +10,10 @@ function SidePanel() {
                 <nav>
                     <ul>
                         <li className="mb-4">
-                            <a href="#" className="text-white">Category</a>
+                            <Link to="/category" className="text-white">Category</Link>
                         </li>
                         <li className="mb-4">
-                            <a href="#" className="text-white">Products</a>
+                            <Link to="/product" className="text-white">Products</Link>
                         </li>
                         <li className="mb-4">
                             <a href="#" className="text-white">Users</a>

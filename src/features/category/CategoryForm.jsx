@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function AddCategory({ existingCategory, onSave, onCancel }) {
+function AddCategory({ Category, onSave, onCancel, error }) {
+    const navigate = useNavigate();
     const [category, setCategory] = useState({
         name: '',
         description: '',
         image: '',
     });
+    const [formErrors, setFormErrors] = useState('');
 
     useEffect(() => {
-        if (existingCategory) {
-            console.log(existingCategory);
+        if (Category) {
+            console.log(Category);
             setCategory({
-                categoryId: existingCategory.id || '', 
-                name: existingCategory.name || '',
-                description: existingCategory.description || '',
-                image: existingCategory.image_path || '',
+                categoryId: Category.id || '',
+                name: Category.name || '',
+                description: Category.description || '',
+                image: Category.image_path || '',
             });
         }
-    }, [existingCategory]);
+    }, [Category]);
 
-    const [message, setMessage] = useState('');
-    const [isError, setIsError] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null);
+    // const [selectedFile, setSelectedFile] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,46 +32,53 @@ function AddCategory({ existingCategory, onSave, onCancel }) {
         }));
     };
 
-    // const handleFileChange = (e) => {
-    //     setSelectedFile(e.target.files[0]); // Capture the selected file
-    //     // console.log('category image:', selectedFile );
-    // };
     const handleFileChange = (e) => {
         setCategory((prev) => ({
             ...prev,
             image: e.target.files[0],
         }));
     };
+    useEffect(() => {
+        if (error) {
+            setFormErrors(error);
+        }
+    }, [error]);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     onSave(category);
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
         // Create a FormData object to handle the file upload properly
         const formData = new FormData();
         formData.append('name', category.name);
         formData.append('description', category.description);
-    
+
         // If a new image is selected, append it to the form data
-        if (selectedFile) {
-            formData.append('image', selectedFile);
-        } else if (category.image) {
+        // if (selectedFile) {
+        //     formData.append('image', selectedFile);
+        // } else
+        if (category.image) {
             // For an existing image, append the image path or file if needed
             formData.append('image', category.image);
         }
-        if (existingCategory && existingCategory.id) {
-            formData.append('categoryId', existingCategory.id);
+        if (Category && Category.id) {
+            formData.append('categoryId', Category.id);
         }
-    
-        onSave(formData);  // Pass formData to the onSave function
+
+        // onSave(formData);  // Pass formData to the onSave function
+        const saveSuccess = await onSave(formData);
+        
+        console.log(saveSuccess); //
+        if (saveSuccess) {
+            console.log("Navigating to /category");
+            navigate('/category', { state: { message: 'Category saved successfully!' } });
+        }
     };
 
     return (
         <>
             <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
+                {formErrors && (
+                    <span className="text-red-500 text-sm">{formErrors}</span>
+                )}
                 <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col space-y-4">
                     <div className="flex flex-col">
                         <label htmlFor="name" className="font-semibold mb-1">
@@ -104,27 +112,20 @@ function AddCategory({ existingCategory, onSave, onCancel }) {
                         <label htmlFor="image" className="font-semibold mb-1">
                             Upload Image:
                         </label>
-                        {/* Display the existing or newly selected image preview */}
-                        {(category.image && !selectedFile) ? (
+
+                        {category.image && (
                             <img
-                                src={`http://localhost:5000${category.image}`} // Show existing image
+                                src={`http://localhost:5000${category.image}`}
                                 alt="Category preview"
                                 className="mt-2 w-32 h-32 object-cover"
                             />
-                        ) : selectedFile ? (
-                            <img
-                                src={URL.createObjectURL(selectedFile)} // Show selected file preview
-                                alt="Selected file preview"
-                                className="mt-2 w-32 h-32 object-cover"
-                            />
-                        ) : null}
+                        )}
                         <input
                             type="file"
                             name="image"
                             onChange={handleFileChange}
                             className="p-2  bg-gray-200 text-gray-900 border border-gray-400 rounded-md"
                         />
-
                     </div>
                     <div className='flex gap-3'>
                         <button
@@ -141,15 +142,7 @@ function AddCategory({ existingCategory, onSave, onCancel }) {
                             Cancel
                         </button>
                     </div>
-
                 </form>
-
-                {/* Displaying the message */}
-                {message && (
-                    <div className="mt-4">
-                        {message}
-                    </div>
-                )}
             </div>
 
         </>

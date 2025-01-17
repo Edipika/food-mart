@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
 import { BASE_URL } from '../../app/api/axios';
+import { useLocation } from 'react-router-dom';
 function CategoryList({ onEditClick, onAddClick }) {
 
     const { data: categories, isLoading } = useGetCategoryQuery();
     const [deleteCategory, { isSuccess, isError, error }] = useDeleteCategoryMutation();
     const handleDelete = (id) => {
         deleteCategory(id);
-    }; 
-    const handleEditClick = (category) => {
+    };
+    const handleEdit = (category) => {
         onEditClick(category);
     };
-
+    const location = useLocation();
+    const successMessage = location.state?.message;
     if (isLoading) return <p>Loading...</p>;
 
     return (
@@ -19,6 +21,7 @@ function CategoryList({ onEditClick, onAddClick }) {
             {/* Success or error state handling */}
             {isSuccess && <p>Category deleted successfully!</p>}
             {isError && <p>Error: {error?.data?.message || "Deletion failed"}</p>}
+            {successMessage && <div className="bg-green-200 p-4 rounded">{successMessage}</div>}
 
             <div className="m-10">
                 <div className="flex justify-between mb-4">
@@ -29,6 +32,7 @@ function CategoryList({ onEditClick, onAddClick }) {
                         Add Category
                     </button>
                 </div>
+            
                 <table className="min-w-full border-gray-200 rounded-lg">
                     {/* Table Header */}
                     <thead className="bg-slate-200">
@@ -53,17 +57,19 @@ function CategoryList({ onEditClick, onAddClick }) {
                                         className="w-16 h-16 object-cover rounded-md"
                                     />
                                 </td>
-                                <td className="p-4 border-b">{category.id}{category.name}</td>
+                                <td className="p-4 border-b">{category.name}</td>
                                 <td className="p-4 border-b">
                                     <button
-                                        onClick={() => handleEditClick(category)}
+                                        onClick={() => handleEdit(category)}
                                         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
                                     >
                                         Edit
                                     </button>
                                 </td>
                                 <td className="p-4 border-b">
-                                    <button onClick={() => handleDelete(category.id)} className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
+                                    <button
+                                     onClick={() => handleDelete(category.id)} 
+                                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
                                 </td>
                             </tr>
                         ))}

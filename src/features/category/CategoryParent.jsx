@@ -1,46 +1,64 @@
 import React, { useState } from 'react';
 import Layout from '../../admin/common/Layout';
 import AddCategory from './CategoryForm';
-import CategoryList from './CategoryList'; 
-import { useAddCategoryMutation,useUpdateCategoryMutation } from './categoryApi';
+import CategoryList from './CategoryList';
+import { useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
 
 function CategoryParent() {
     const [isEditing, setIsEditing] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-
-    const [addCategory] = useAddCategoryMutation();
-    const [updateCategory] = useUpdateCategoryMutation();
+    const [category, setCategory] = useState(null);
+    // const [categoryData, setCategoryData] = useState(null);
+    const [addCategory, { error: addError }] = useAddCategoryMutation();
+    const [updateCategory, { error: updateError }] = useUpdateCategoryMutation();
 
     const handleEditClick = (category) => {
-        setSelectedCategory(category);
+        setCategory(category);
         setIsEditing(true);
     };
 
     const handleCancelEdit = () => {
-        setSelectedCategory(null);
+        console.log('Editing Category:', category);
+        setCategory(null);
         setIsEditing(false);
     };
     const onAddClick = () => {
-        setSelectedCategory(null);
+        setCategory(null);
         setIsEditing(true);
-    }
+    };
 
     const handleSaveCategory = async (category) => {
-        if (selectedCategory) {
-            await updateCategory(category); // Update existing category
-        } else {
-            await addCategory(category); // Add new category
+        try {
+            if (category.get('categoryId')) {
+                await updateCategory(category).unwrap();
+            } else {
+                await addCategory(category).unwrap();
+            }
+            return true;
+        } catch (err) {
+            console.error(err);
+            return false;
         }
-        setSelectedCategory(null); // Reset after saving
     };
+     // Extract error message from the error format
+     const extractErrorMessage = (error) => {
+        if (!error || !error.data || !error.data.error) {
+            return ''; // Return an empty string if no error
+        }
+        return error.data.error; // Return the error message string
+    };
+
+    const error = extractErrorMessage(addError) || extractErrorMessage(updateError);
+
+    // const error = addError?.data?.errors || updateError?.data?.errors || {};
 
     return (
         <Layout>
             {isEditing ? (
                 <AddCategory
-                    existingCategory={selectedCategory}
+                    Category={category}
                     onSave={handleSaveCategory}
                     onCancel={handleCancelEdit} // Back button action
+                    error={error}
                 />
             ) : (
                 <CategoryList

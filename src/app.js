@@ -8,6 +8,8 @@ import ProductDetails from './pages/ProductDetails.jsx';
 import AddCategory from './features/category/CategoryForm.jsx';
 import CategoryParent from './features/category/CategoryParent.jsx';
 import CategoryList from './features/category/CategoryList.jsx';
+import AddProduct from './features/products/ProductForm.jsx';
+import Product from './features/products/Product.jsx';
 
 
 function App() {
@@ -23,8 +25,8 @@ function App() {
       <Route path="productDetails" element={<ProductDetails />} />
 
       <Route path="category" element={<CategoryParent />} /> 
-      {/* <Route path="category" element={<AddCategory />} />
-      <Route path="categories" element={<CategoryList />} /> */}
+      <Route path="product" element={<Product />} />
+      <Route path="add" element={<AddProduct />} />
       
       {/* <Route element={<PersistLogin />}> */}
       {/* protected routes */}
