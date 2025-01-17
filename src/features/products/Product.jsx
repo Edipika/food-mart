@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../../admin/common/Layout';
 import ProductForm from './ProductForm';
 import ProductList from './ProductList';
@@ -21,6 +21,12 @@ function Product() {
     setExisitingProduct(null);
     setIsEditing(false);
   };
+  useEffect(() => {
+    const onSuccess = () => {
+      setIsEditing(false);
+    };
+  }, [isEditing]);
+
 
   const [addProduct, { isLoading, isError, error, isSuccess }] = useAddProductMutation();
   const handleSaveProduct = async (productData) => {
@@ -42,6 +48,7 @@ function Product() {
             error={error}
             isSuccess={isSuccess}
             onCancel={handleCancelEdit}
+            onSuccess={onSuccess}
           />) : (
           <ProductList
             addProduct={onAddProduct}

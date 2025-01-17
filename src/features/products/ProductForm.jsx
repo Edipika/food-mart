@@ -3,7 +3,7 @@ import { useGetCategoryQuery } from '../category/categoryApi';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProductMutation } from './productApi';
 
-function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCancel }) {
+function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCancel,onSuccess }) {
     console.log(exisitingProduct);
     const [updateProduct,
         { isLoading: isUpdating,
@@ -24,7 +24,8 @@ function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCan
     }
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
-            navigate('/welcome');
+            onSuccess();
+            // navigate('/product');
         }
     }, [isSuccess, isUpdateSuccess]);
     useEffect(() => {
