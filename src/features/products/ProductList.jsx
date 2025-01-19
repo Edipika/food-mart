@@ -1,20 +1,27 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BASE_URL } from '../../app/api/axios';
 import { useGetProductQuery } from './productApi';
 import { useDeleteProductMutation } from './productApi';
 import { useNavigate } from 'react-router-dom';
 
-function ProductList({ addProduct, editProduct }) {
+function ProductList({ addProduct, editProduct, isEditing }) {
     const navigate = useNavigate();
     const [deleteProduct, { isSuccess, isError, error }] = useDeleteProductMutation();
-    const deleteProd = (productId) => {
+    const [deleteMsg, setDeleteMsg] = useState('');
+    const deleteProd = async (productId) => {
         console.log(productId);
-        deleteProduct(productId);
+        await deleteProduct(productId);
+        setDeleteMsg('Product deleted successfully!');
     };
-
-    const { data: products, isLoading } = useGetProductQuery();
+    const { data: products, isLoading, refetch } = useGetProductQuery();
+    useEffect(() => {
+        if (!isEditing || isSuccess) {
+            refetch(); // Re-fetch products when editing is done
+        }
+    }, [isEditing, isSuccess, refetch]);
     if (isLoading) return <p>Loading...</p>;
+
     const productArray = products?.data || [];
     return (
         <>
@@ -27,12 +34,22 @@ function ProductList({ addProduct, editProduct }) {
                         Add Product
                     </button>
                 </div>
-                {(isSuccess) && (
+                {/* {(isSuccess) && (
                     <div className="bg-green-700 text-white p-1 mb-1 rounded">
                         <p>Product Deleted successfully!!</p>
                     </div>
+                )} */}
+                {isSuccess && deleteMsg && (
+                    <div className="bg-green-700 text-white p-1 mb-1  rounded flex items-center justify-between">
+                        <p>{deleteMsg}</p>
+                        <button
+                            className=" text-white px-2 py-1 ml-2 rounded"
+                            onClick={() => setDeleteMsg('')}
+                        >
+                            X
+                        </button>
+                    </div>
                 )}
-
                 <table className="min-w-full border-gray-200 rounded-lg">
                     {/* Table Header */}
                     <thead className="bg-slate-200">
@@ -66,7 +83,9 @@ function ProductList({ addProduct, editProduct }) {
                                 <td className="p-4 border-b">{item.product.name}</td>
 
                                 <td className="p-4 border-b">
+                                {/* {item.product.id} */}
                                     <button
+                                   
                                         onClick={() => editProduct(item.product)}
                                         //onClick={editProduct(item.product)}
                                         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200">

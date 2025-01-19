@@ -3,14 +3,14 @@ import { useGetCategoryQuery } from '../category/categoryApi';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProductMutation } from './productApi';
 
-function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCancel,onSuccess }) {
-    console.log(exisitingProduct);
+function ProductForm({ onSave, isError, error, isSuccess, existingProduct,onCancel,onSuccess }) {
+    // console.log(existingProduct);
     const [updateProduct,
         { isLoading: isUpdating,
             isError: isUpdateError,
             error: updateError,
             isSuccess: isUpdateSuccess }] = useUpdateProductMutation();
-    const navigate = useNavigate();
+  
     const [product, setProduct] = useState({
         categoryId: '',
         name: '',
@@ -25,20 +25,19 @@ function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCan
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
             onSuccess();
-            // navigate('/product');
         }
     }, [isSuccess, isUpdateSuccess]);
     useEffect(() => {
-        if (exisitingProduct) {
+        if (existingProduct) {
             setProduct({
-                categoryId: exisitingProduct.category_id,
-                name: exisitingProduct.name,
-                description: exisitingProduct.description,
-                price: exisitingProduct.price,
+                categoryId: existingProduct.category_id,
+                name: existingProduct.name,
+                description: existingProduct.description,
+                price: existingProduct.price,
                 image: null,
             });
         }
-    }, [exisitingProduct]);
+    }, [existingProduct]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,9 +47,9 @@ function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCan
         formData.append('description', product.description);
         formData.append('price', product.price);
         formData.append('image', product.image);
-        if (exisitingProduct) {
+        if (existingProduct) {
             try {
-                formData.append('productId', exisitingProduct.id);
+                formData.append('productId', existingProduct.id);
                 await updateProduct(formData).unwrap();
             } catch (err) {
                 console.error(err);
@@ -66,11 +65,6 @@ function ProductForm({ onSave, isError, error, isSuccess, exisitingProduct,onCan
     return (
         <>
             <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
-                {/* {isError && error && (
-                    <div className="bg-red-700 text-white p-1 mb-1 rounded">
-                        <strong>Error:</strong> {error?.data?.message || 'An error occurred'}
-                    </div>
-                )} */}
                 {(isError || isUpdateError) && (error || updateError) && (
                     <div className="bg-red-700 text-white p-1 mb-1 rounded">
                         <strong>Error:</strong>
