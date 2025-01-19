@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGetCategoryQuery, useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
 
 function AddCategory({ Category, onSave, onCancel, error }) {
     const navigate = useNavigate();
     const [category, setCategory] = useState({
+        parent_id: '',
         name: '',
         description: '',
         image: '',
@@ -25,19 +27,13 @@ function AddCategory({ Category, onSave, onCancel, error }) {
     // const [selectedFile, setSelectedFile] = useState(null);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, files } = e.target;
         setCategory((prevCategory) => ({
             ...prevCategory,
-            [name]: value,
+            [name]: type === 'file' ? files[0] : value,
         }));
     };
 
-    const handleFileChange = (e) => {
-        setCategory((prev) => ({
-            ...prev,
-            image: e.target.files[0],
-        }));
-    };
     useEffect(() => {
         if (error) {
             setFormErrors(error);
@@ -50,22 +46,14 @@ function AddCategory({ Category, onSave, onCancel, error }) {
         const formData = new FormData();
         formData.append('name', category.name);
         formData.append('description', category.description);
-
-        // If a new image is selected, append it to the form data
-        // if (selectedFile) {
-        //     formData.append('image', selectedFile);
-        // } else
         if (category.image) {
-            // For an existing image, append the image path or file if needed
             formData.append('image', category.image);
         }
         if (Category && Category.id) {
             formData.append('categoryId', Category.id);
         }
-
-        // onSave(formData);  // Pass formData to the onSave function
         const saveSuccess = await onSave(formData);
-        
+
         console.log(saveSuccess); //
         if (saveSuccess) {
             console.log("Navigating to /category");
@@ -123,7 +111,7 @@ function AddCategory({ Category, onSave, onCancel, error }) {
                         <input
                             type="file"
                             name="image"
-                            onChange={handleFileChange}
+                            onChange={handleChange}
                             className="p-2  bg-gray-200 text-gray-900 border border-gray-400 rounded-md"
                         />
                     </div>
