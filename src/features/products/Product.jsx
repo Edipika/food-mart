@@ -5,8 +5,6 @@ import ProductForm from './ProductForm';
 import ProductList from './ProductList';
 import { useAddProductMutation } from './productApi';
 
-
-
 const Product = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

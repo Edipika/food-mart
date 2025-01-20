@@ -26,7 +26,7 @@ function App() {
 
       <Route path="category" element={<CategoryParent />} /> 
       <Route path="product" element={<Product />} />
-      <Route path="add" element={<AddProduct />} />
+      <Route path="categoryList" element={<CategoryList />} />
       
       {/* <Route element={<PersistLogin />}> */}
       {/* protected routes */}
