@@ -2,22 +2,30 @@ import React from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
 import { BASE_URL } from '../../app/api/axios';
 import { useLocation } from 'react-router-dom';
-function CategoryList({ onEditClick, onAddClick }) {
-
+import Layout from '../../admin/common/Layout';
+import { useNavigate } from 'react-router-dom';
+function CategoryList() {
+    const navigate = useNavigate();
     const { data: categories, isLoading } = useGetCategoryQuery();
     const [deleteCategory, { isSuccess, isError, error }] = useDeleteCategoryMutation();
     const handleDelete = (id) => {
         deleteCategory(id);
     };
-    const handleEdit = (category) => {
-        onEditClick(category);
-    };
+    // const handleEdit = (category) => {
+    //     onEditClick(category);
+    // };
+
+    const onAddClick = () => {
+        navigate('/addcategory');
+    }
+
     const location = useLocation();
     const successMessage = location.state?.message;
     if (isLoading) return <p>Loading...</p>;
 
     return (
         <>
+        <Layout>
             {/* Success or error state handling */}
             {isSuccess && <p>Category deleted successfully!</p>}
             {isError && <p>Error: {error?.data?.message || "Deletion failed"}</p>}
@@ -60,7 +68,7 @@ function CategoryList({ onEditClick, onAddClick }) {
                                 <td className="p-4 border-b">{category.name}</td>
                                 <td className="p-4 border-b">
                                     <button
-                                        onClick={() => handleEdit(category)}
+                                        // onClick={() => handleEdit(category)}
                                         className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
                                     >
                                         Edit
@@ -77,7 +85,7 @@ function CategoryList({ onEditClick, onAddClick }) {
                 </table>
 
             </div>
-
+            </Layout>
         </>
     );
 }

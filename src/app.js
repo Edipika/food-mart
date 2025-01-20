@@ -6,7 +6,6 @@ import Register from './features/auth/Register.jsx';
 import SearchPage from './pages/Search.jsx';
 import ProductDetails from './pages/ProductDetails.jsx';
 import AddCategory from './features/category/CategoryForm.jsx';
-import CategoryParent from './features/category/CategoryParent.jsx';
 import CategoryList from './features/category/CategoryList.jsx';
 import AddProduct from './features/products/ProductForm.jsx';
 import Product from './features/products/Product.jsx';
@@ -24,9 +23,10 @@ function App() {
       <Route path="search" element={<SearchPage />} />
       <Route path="productDetails" element={<ProductDetails />} />
 
-      <Route path="category" element={<CategoryParent />} /> 
+      {/* <Route path="category" element={<CategoryParent />} />  */}
       <Route path="product" element={<Product />} />
-      <Route path="categoryList" element={<CategoryList />} />
+      <Route path="category" element={<CategoryList />} />
+      <Route path="addcategory" element={<AddCategory />} />
       
       {/* <Route element={<PersistLogin />}> */}
       {/* protected routes */}

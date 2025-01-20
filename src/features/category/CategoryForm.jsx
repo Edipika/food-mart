@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../../admin/common/Layout';
 import { useGetCategoryQuery, useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
 
 function AddCategory({ Category }) {
@@ -44,12 +45,12 @@ function AddCategory({ Category }) {
 
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
-            navigate('/categoryList')
+            navigate('/category')
             // navigate('/welcome', { state: { message: 'Category saved successfully!' } });
         }
     }, [isSuccess, isUpdateSuccess, navigate]);
     const onCancel = () => {
-        navigate('/categoryList')
+        navigate('/category')
     };
 
     const handleSubmit = async (e) => {
@@ -72,6 +73,7 @@ function AddCategory({ Category }) {
     if (categoriesLoading) return <p>categories Loading...</p>;
     return (
         <>
+        <Layout>
             <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
                 {isError && error?.data?.message || isUpdateError && updateError?.data?.message && (
                     <span className="text-red-500 text-sm">{(error.data.message || updateError?.data?.message) || 'An error occurred'}</span>
@@ -160,7 +162,7 @@ function AddCategory({ Category }) {
                     </div>
                 </form>
             </div>
-
+            </Layout>
         </>
     );
 }

@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const categorySlice = createSlice({
-    name:'category',
-    initialState:{
+    name: 'category',
+    initialState: {
         isEditing: false,
         selectedCategory: null,
-        isSuccess: false,
     },
-    reducers:{
-        
-    }
-})
+    reducers: {
+        startEditing(state, action) {
+            state.isEditing = true;
+            state.selectedCategory = action.payload;
+        },
+        stopEditing(state) {
+            state.isEditing = false;
+            state.selectedCategory = null;
+        },
+    },
+});
+export const { startEditing, stopEditing } = categorySlice.actions;
+export default categorySlice.reducer;
