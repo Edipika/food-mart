@@ -2,42 +2,40 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
 import { BASE_URL } from '../../app/api/axios';
-import { useLocation } from 'react-router-dom';
 import Layout from '../../admin/common/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { startEditing } from './categorySlice';
+import { startEditing } from '../editSlice';
 import { useSelector } from 'react-redux';
+import {nullSuccessMsg} from '../editSlice';
 
 function CategoryList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const location = useLocation();
     const { data: categories, isLoading, refetch } = useGetCategoryQuery();
+
     const [deleteCategory, { isSuccess, isError, error }] = useDeleteCategoryMutation();
     const handleDelete = (id) => {
         deleteCategory(id);
     };
-    const successMessage = location.state?.message;
+    const successMessage = useSelector((state) => state.editSlice.successMsg);
     useEffect(() => {
         refetch();
-    }, [refetch, isSuccess, successMessage]);
+    }, [refetch, isSuccess]);
 
     const handleEdit = (category) => {
         dispatch(startEditing(category));
         navigate('/addcategory');
     };
-    const selectedCategory = useSelector((state) => state.categorySlice.selectedCategory);
-    const categorySlice = useSelector((state) => state.categorySlice);
-    console.log("selectedCategory from Redux state:", selectedCategory);
-    console.log("categorySlice", categorySlice);
-
+    // const selectedCategory = useSelector((state) => state.editSlice.selectedItem);
+    // const categorySlice = useSelector((state) => state.editSlice);
+    // console.log("selectedCategory from Redux state:", selectedCategory);
+    // console.log("categorySlice", categorySlice);
 
     const onAddClick = () => {
         navigate('/addcategory');
     }
 
-  
     if (isLoading) return <p>Loading...</p>;
 
     return (
@@ -46,7 +44,19 @@ function CategoryList() {
                 {/* Success or error state handling */}
                 {isSuccess && <p>Category deleted successfully!</p>}
                 {isError && <p>Error: {error?.data?.message || "Deletion failed"}</p>}
-                {successMessage && <div className="bg-green-700 p-1 rounded text-white">{successMessage}</div>}
+                {/* {successMessage && <div className="bg-green-700 p-1 rounded text-white">{successMessage}</div>} */}
+
+                {successMessage && (
+                    <div className="bg-green-700 p-1 rounded text-white flex justify-between items-center">
+                        <span>{successMessage}</span>
+                        <button
+                            onClick={() => dispatch(nullSuccessMsg())}
+                            className="bg-green-900 text-white px-2 py-1 rounded hover:bg-green-800 transition duration-200"
+                        >
+                            ×
+                        </button>
+                    </div>
+                )}
 
                 <div className="m-10">
                     <div className="flex justify-between mb-4">

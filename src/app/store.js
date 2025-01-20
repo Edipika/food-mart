@@ -3,7 +3,7 @@ import { apiSlice } from "./api/apiSlice";
 import authReducer from "../features/auth/authSlice";
 import { categoryApi } from "../features/category/categoryApi";
 import { productApi } from "../features/products/productApi";
-import categoryReducer from "../features/category/categorySlice";
+import editReducer from "../features/editSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +12,7 @@ export const store = configureStore({
         [categoryApi.reducerPath]: categoryApi.reducer,
         [productApi.reducerPath]: productApi.reducer,
         auth: authReducer,
-        categorySlice: categoryReducer,
+        editSlice: editReducer,
 
     },
     middleware: getDefaultMiddleware =>

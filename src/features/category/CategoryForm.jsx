@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../admin/common/Layout';
 import { useGetCategoryQuery, useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
-import { useSelector, useDispatch  } from 'react-redux';
-import { stopEditing } from './categorySlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { stopEditing,setSuccessMsg } from '../editSlice';
 
 
 function AddCategory() {
@@ -33,18 +33,21 @@ function AddCategory() {
 
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
-            // navigate('/category')
-            navigate('/category', { state: { message: 'Category saved successfully!' } });
+            dispatch(setSuccessMsg('Product Saved successfully.'));
+            dispatch(stopEditing());
+            navigate('/category');
+            // navigate('/category', { state: { message: 'Category saved successfully!' } });
+
         }
     }, [isSuccess, isUpdateSuccess, navigate]);
 
     const onCancel = () => {
         navigate('/category')
     };
-    const selectedCategory = useSelector((state) => state.categorySlice.selectedCategory);
-    // const categorySlice = useSelector((state) => state.categorySlice);
-    // console.log("selectedCategory from Redux state:", selectedCategory);
-    // console.log("categorySlice", categorySlice);
+      const selectedCategory = useSelector((state) => state.editSlice.selectedItem);
+       const categorySlice = useSelector((state) => state.editSlice);
+       console.log("selectedCategory from Redux state:", selectedCategory);
+       console.log("categorySlice", categorySlice);
 
     useEffect(() => {
         // console.log("Redux State:", store.getState());
@@ -74,7 +77,7 @@ function AddCategory() {
         }
         if (selectedCategory && selectedCategory.id) {
             await updateCategory(formData)
-            dispatch(stopEditing());
+            
         } else {
             await addCategory(formData)
         }
@@ -83,7 +86,12 @@ function AddCategory() {
     return (
         <>
             <Layout>
-                {selectedCategory ? 'Add Category' : 'not selected'}
+                <button
+                    className="mt-3 ml-3 p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
+                >
+                    {selectedCategory ? 'Edit Product' : 'Add Category'}
+                </button>
+
                 <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
                     {(isError || isUpdateError) && (
                         <span className="text-red-500 text-sm">
