@@ -8,7 +8,7 @@ import ProductDetails from './pages/ProductDetails.jsx';
 import AddCategory from './features/category/CategoryForm.jsx';
 import CategoryList from './features/category/CategoryList.jsx';
 import AddProduct from './features/products/ProductForm.jsx';
-import Product from './features/products/Product.jsx';
+import ProductList from './features/products/ProductList.jsx';
 
 
 function App() {
@@ -22,7 +22,9 @@ function App() {
       <Route path="search" element={<SearchPage />} />
       <Route path="productDetails" element={<ProductDetails />} />
 
-      <Route path="product" element={<Product />} />
+      <Route path="product" element={<ProductList />} />
+      <Route path="addproduct" element={<AddProduct />} />
+
       <Route path="category" element={<CategoryList />} />
       <Route path="addcategory" element={<AddCategory />} />
 

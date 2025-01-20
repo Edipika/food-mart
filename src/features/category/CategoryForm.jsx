@@ -33,7 +33,7 @@ function AddCategory() {
 
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
-            dispatch(setSuccessMsg('Product Saved successfully.'));
+            dispatch(setSuccessMsg('Category Saved successfully.'));
             dispatch(stopEditing());
             navigate('/category');
             // navigate('/category', { state: { message: 'Category saved successfully!' } });
@@ -45,9 +45,9 @@ function AddCategory() {
         navigate('/category')
     };
       const selectedCategory = useSelector((state) => state.editSlice.selectedItem);
-       const categorySlice = useSelector((state) => state.editSlice);
-       console.log("selectedCategory from Redux state:", selectedCategory);
-       console.log("categorySlice", categorySlice);
+    //    const categorySlice = useSelector((state) => state.editSlice);
+    //    console.log("selectedCategory from Redux state:", selectedCategory);
+    //    console.log("categorySlice", categorySlice);
 
     useEffect(() => {
         // console.log("Redux State:", store.getState());
@@ -89,7 +89,7 @@ function AddCategory() {
                 <button
                     className="mt-3 ml-3 p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
                 >
-                    {selectedCategory ? 'Edit Product' : 'Add Category'}
+                    {selectedCategory ? 'Edit Category' : 'Add Category'}
                 </button>
 
                 <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
