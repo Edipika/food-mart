@@ -1,90 +1,107 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
 import { BASE_URL } from '../../app/api/axios';
 import { useLocation } from 'react-router-dom';
 import Layout from '../../admin/common/Layout';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { startEditing } from './categorySlice';
+import { useSelector } from 'react-redux';
+
 function CategoryList() {
     const navigate = useNavigate();
-    const { data: categories, isLoading } = useGetCategoryQuery();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const { data: categories, isLoading, refetch } = useGetCategoryQuery();
     const [deleteCategory, { isSuccess, isError, error }] = useDeleteCategoryMutation();
     const handleDelete = (id) => {
         deleteCategory(id);
     };
-    // const handleEdit = (category) => {
-    //     onEditClick(category);
-    // };
+    const successMessage = location.state?.message;
+    useEffect(() => {
+        refetch();
+    }, [refetch, isSuccess, successMessage]);
+
+    const handleEdit = (category) => {
+        dispatch(startEditing(category));
+        navigate('/addcategory');
+    };
+    const selectedCategory = useSelector((state) => state.categorySlice.selectedCategory);
+    const categorySlice = useSelector((state) => state.categorySlice);
+    console.log("selectedCategory from Redux state:", selectedCategory);
+    console.log("categorySlice", categorySlice);
+
 
     const onAddClick = () => {
         navigate('/addcategory');
     }
 
-    const location = useLocation();
-    const successMessage = location.state?.message;
+  
     if (isLoading) return <p>Loading...</p>;
 
     return (
         <>
-        <Layout>
-            {/* Success or error state handling */}
-            {isSuccess && <p>Category deleted successfully!</p>}
-            {isError && <p>Error: {error?.data?.message || "Deletion failed"}</p>}
-            {successMessage && <div className="bg-green-200 p-4 rounded">{successMessage}</div>}
+            <Layout>
+                {/* Success or error state handling */}
+                {isSuccess && <p>Category deleted successfully!</p>}
+                {isError && <p>Error: {error?.data?.message || "Deletion failed"}</p>}
+                {successMessage && <div className="bg-green-700 p-1 rounded text-white">{successMessage}</div>}
 
-            <div className="m-10">
-                <div className="flex justify-between mb-4">
-                    <h2 className="text-2xl font-bold">Categories</h2>
-                    <button
-                        onClick={onAddClick}
-                        className="bg-gray-950 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition duration-200">
-                        Add Category
-                    </button>
-                </div>
-            
-                <table className="min-w-full border-gray-200 rounded-lg">
-                    {/* Table Header */}
-                    <thead className="bg-slate-200">
-                        <tr>
-                            <th className="text-left p-4 border-b font-semibold">SrNo</th>
-                            <th className="text-left p-4 border-b font-semibold">Image</th>
-                            <th className="text-left p-4 border-b font-semibold">Name</th>
-                            <th className="text-left p-4 border-b font-semibold">Edit</th>
-                            <th className="text-left p-4 border-b font-semibold">Delete</th>
-                        </tr>
-                    </thead>
+                <div className="m-10">
+                    <div className="flex justify-between mb-4">
+                        <h2 className="text-2xl font-bold">Categories</h2>
+                        <button
+                            onClick={onAddClick}
+                            className="bg-gray-950 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition duration-200">
+                            Add Category
+                        </button>
+                    </div>
 
-                    {/* Table Body */}
-                    <tbody>
-                        {categories.map((category, index) => (
-                            <tr key={category.id} className="hover:bg-gray-50" >
-                                <td className="p-4 border-b ">{index + 1}</td>
-                                <td className="p-4 border-b">
-                                    <img
-                                        src={`${BASE_URL}${category.image_path}`}
-                                        alt={category.name}
-                                        className="w-16 h-16 object-cover rounded-md"
-                                    />
-                                </td>
-                                <td className="p-4 border-b">{category.name}</td>
-                                <td className="p-4 border-b">
-                                    <button
-                                        // onClick={() => handleEdit(category)}
-                                        className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
-                                    >
-                                        Edit
-                                    </button>
-                                </td>
-                                <td className="p-4 border-b">
-                                    <button
-                                     onClick={() => handleDelete(category.id)} 
-                                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
-                                </td>
+                    <table className="min-w-full border-gray-200 rounded-lg">
+                        {/* Table Header */}
+                        <thead className="bg-slate-200">
+                            <tr>
+                                <th className="text-left p-4 border-b font-semibold">SrNo</th>
+                                <th className="text-left p-4 border-b font-semibold">Image</th>
+                                <th className="text-left p-4 border-b font-semibold">Name</th>
+                                <th className="text-left p-4 border-b font-semibold">Edit</th>
+                                <th className="text-left p-4 border-b font-semibold">Delete</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
 
-            </div>
+                        {/* Table Body */}
+                        <tbody>
+                            {categories.map((category, index) => (
+                                <tr key={category.id} className="hover:bg-gray-50" >
+                                    <td className="p-4 border-b ">{index + 1}</td>
+                                    <td className="p-4 border-b">
+                                        <img
+                                            src={`${BASE_URL}${category.image_path}`}
+                                            alt={category.name}
+                                            className="w-16 h-16 object-cover rounded-md"
+                                        />
+                                    </td>
+                                    <td className="p-4 border-b">{category.name}</td>
+                                    <td className="p-4 border-b">
+                                        <button
+                                            onClick={() => handleEdit(category)}
+                                            className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                    <td className="p-4 border-b">
+                                        <button
+                                            onClick={() => handleDelete(category.id)}
+                                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                </div>
             </Layout>
         </>
     );

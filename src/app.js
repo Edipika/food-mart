@@ -14,8 +14,7 @@ import Product from './features/products/Product.jsx';
 function App() {
   return (
     <Routes>
-      {/* <Route path="/" element={<Layout />}> */}
-      {/* public routes */}
+
       <Route index element={<HomePage />} />
       <Route path="welcome" element={<HomePage />} />
       <Route path="login" element={<Login />} />
@@ -23,19 +22,11 @@ function App() {
       <Route path="search" element={<SearchPage />} />
       <Route path="productDetails" element={<ProductDetails />} />
 
-      {/* <Route path="category" element={<CategoryParent />} />  */}
       <Route path="product" element={<Product />} />
       <Route path="category" element={<CategoryList />} />
       <Route path="addcategory" element={<AddCategory />} />
-      
-      {/* <Route element={<PersistLogin />}> */}
-      {/* protected routes */}
-      {/* <Route element={<RequireAuth />}>
-            <Route path="welcome" element={<Welcome />} />
-            <Route path="userslist" element={<UsersList />} />
-          </Route>
-        </Route> */}
-      {/* </Route> */}
+
+
     </Routes>
   );
 }

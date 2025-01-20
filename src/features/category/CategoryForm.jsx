@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../admin/common/Layout';
 import { useGetCategoryQuery, useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
+import { useSelector, useDispatch  } from 'react-redux';
+import { stopEditing } from './categorySlice';
 
-function AddCategory({ Category }) {
-    // onSave, onCancel, , error 
+
+function AddCategory() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [category, setCategory] = useState({
         parent_id: '',
@@ -20,21 +23,6 @@ function AddCategory({ Category }) {
         error: updateError,
         isSuccess: isUpdateSuccess }] = useUpdateCategoryMutation();
 
-
-    useEffect(() => {
-        if (Category) {
-            console.log(Category);
-            setCategory({
-                categoryId: Category.id || '',
-                name: Category.name || '',
-                description: Category.description || '',
-                image: Category.image_path || '',
-            });
-        }
-    }, [Category]);
-
-    // const [selectedFile, setSelectedFile] = useState(null);
-
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         setCategory((prevCategory) => ({
@@ -45,13 +33,33 @@ function AddCategory({ Category }) {
 
     useEffect(() => {
         if (isSuccess || isUpdateSuccess) {
-            navigate('/category')
-            // navigate('/welcome', { state: { message: 'Category saved successfully!' } });
+            // navigate('/category')
+            navigate('/category', { state: { message: 'Category saved successfully!' } });
         }
     }, [isSuccess, isUpdateSuccess, navigate]);
+
     const onCancel = () => {
         navigate('/category')
     };
+    const selectedCategory = useSelector((state) => state.categorySlice.selectedCategory);
+    // const categorySlice = useSelector((state) => state.categorySlice);
+    // console.log("selectedCategory from Redux state:", selectedCategory);
+    // console.log("categorySlice", categorySlice);
+
+    useEffect(() => {
+        // console.log("Redux State:", store.getState());
+        console.log("selectedCategory from Redux state:", selectedCategory);
+        if (selectedCategory) {
+            console.log('Category from state:', selectedCategory);
+            setCategory({
+                parent_id: selectedCategory.parent_id || '',
+                name: selectedCategory.name || '',
+                description: selectedCategory.description || '',
+                image: selectedCategory.image_path || '',
+            });
+        }
+    }, [selectedCategory]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,11 +69,12 @@ function AddCategory({ Category }) {
         formData.append('name', category.name);
         formData.append('description', category.description);
         formData.append('image', category.image);
-        if (Category && Category.id) {
-            formData.append('categoryId', Category.id);
+        if (selectedCategory && selectedCategory.id) {
+            formData.append('categoryId', selectedCategory.id);
         }
-        if (Category && Category.id) {
+        if (selectedCategory && selectedCategory.id) {
             await updateCategory(formData)
+            dispatch(stopEditing());
         } else {
             await addCategory(formData)
         }
@@ -73,95 +82,98 @@ function AddCategory({ Category }) {
     if (categoriesLoading) return <p>categories Loading...</p>;
     return (
         <>
-        <Layout>
-            <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
-                {isError && error?.data?.message || isUpdateError && updateError?.data?.message && (
-                    <span className="text-red-500 text-sm">{(error.data.message || updateError?.data?.message) || 'An error occurred'}</span>
-                )}
+            <Layout>
+                {selectedCategory ? 'Add Category' : 'not selected'}
+                <div className="bg-slate-300 h-5/6 m-10 p-6 rounded-lg shadow-lg">
+                    {(isError || isUpdateError) && (
+                        <span className="text-red-500 text-sm">
+                            {error?.data?.message || updateError?.data?.message || 'An error occurred'}
+                        </span>
+                    )}
 
-                <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col space-y-4">
-                    <div className="flex flex-col">
-                        <label htmlFor="parent_id" className="font-semibold mb-1">
-                            Select Category:
-                        </label>
-                        <select
-                            name="parent_id"
-                            id="parent_id"
-                            value={category.parent_id}
-                            onChange={handleChange}
-                            className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                        >
-                            <option value="" disabled>-- Select a Category --</option>
-                            {categories.map((category) => (
-                                <option key={category.id} value={category.id}>{category.name}</option>
-                            ))}
-                        </select>
-                    </div>
+                    <form onSubmit={handleSubmit} encType="multipart/form-data" className="flex flex-col space-y-4">
+                        <div className="flex flex-col">
+                            <label htmlFor="parent_id" className="font-semibold mb-1">
+                                Select Category:
+                            </label>
+                            <select
+                                name="parent_id"
+                                id="parent_id"
+                                value={category.parent_id}
+                                onChange={handleChange}
+                                className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                            >
+                                <option value="" disabled>-- Select a Category --</option>
+                                {categories.map((category) => (
+                                    <option key={category.id} value={category.id}>{category.name}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className="flex flex-col">
-                        <label htmlFor="name" className="font-semibold mb-1">
-                            Enter Category Name:
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={category.name}
-                            onChange={handleChange}
-                            className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                            placeholder="Category name"
-                        />
-                    </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="name" className="font-semibold mb-1">
+                                Enter Category Name:
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={category.name}
+                                onChange={handleChange}
+                                className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                                placeholder="Category name"
+                            />
+                        </div>
 
-                    <div className="flex flex-col">
-                        <label htmlFor="description" className=" font-semibold mb-1">
-                            Enter Description:
-                        </label>
-                        <textarea
-                            type='text'
-                            name="description"
-                            value={category.description}
-                            onChange={handleChange}
-                            className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                            placeholder="Category description"
-                        />
-                    </div>
+                        <div className="flex flex-col">
+                            <label htmlFor="description" className=" font-semibold mb-1">
+                                Enter Description:
+                            </label>
+                            <textarea
+                                type='text'
+                                name="description"
+                                value={category.description}
+                                onChange={handleChange}
+                                className="p-2  rounded-md bg-gray-200 text-gray-900 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                                placeholder="Category description"
+                            />
+                        </div>
 
-                    <div className="flex flex-col">
-                        <label htmlFor="image" className="font-semibold mb-1">
-                            Upload Image:
-                        </label>
+                        <div className="flex flex-col">
+                            <label htmlFor="image" className="font-semibold mb-1">
+                                Upload Image:
+                            </label>
 
-                        {/* {category.image && (
+                            {/* {category.image && (
                             <img
                                 src={`http://localhost:5000${category.image}`}
                                 alt="Category preview"
                                 className="mt-2 w-32 h-32 object-cover"
                             />
                         )} */}
-                        <input
-                            type="file"
-                            name="image"
-                            onChange={handleChange}
-                            className="p-2  bg-gray-200 text-gray-900 border border-gray-400 rounded-md"
-                        />
-                    </div>
-                    <div className='flex gap-3'>
-                        <button
-                            type="submit"
-                            className="p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
-                        >
-                            Save
-                        </button>
-                        <button
-                            type="button"
-                            className="p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
-                            onClick={() => onCancel()}
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
+                            <input
+                                type="file"
+                                name="image"
+                                onChange={handleChange}
+                                className="p-2  bg-gray-200 text-gray-900 border border-gray-400 rounded-md"
+                            />
+                        </div>
+                        <div className='flex gap-3'>
+                            <button
+                                type="submit"
+                                className="p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
+                            >
+                                Save
+                            </button>
+                            <button
+                                type="button"
+                                className="p-2 w-1/12 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition duration-200"
+                                onClick={() => onCancel()}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </Layout>
         </>
     );
