@@ -16,10 +16,10 @@ function SidePanel() {
                             <Link to="/product" className="text-white">Products</Link>
                         </li>
                         <li className="mb-4">
-                            <a href="#" className="text-white">Users</a>
+                            <Link to="/userlist" className="text-white">Users</Link>
                         </li>
                         <li className="mb-4">
-                            <a href="#" className="text-white">Manage Admins</a>
+                            <Link to="/admin" className="text-white">Manage Admins</Link>
                         </li>
                     </ul>
                 </nav>

@@ -3,6 +3,7 @@ import { apiSlice } from "./api/apiSlice";
 import authReducer from "../features/auth/authSlice";
 import { categoryApi } from "../features/category/categoryApi";
 import { productApi } from "../features/products/productApi";
+import { userAdminApi } from "../features/userAdminManagement/userAdminApi";
 import editReducer from "../features/editSlice";
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
         [apiSlice.reducerPath]: apiSlice.reducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
         [productApi.reducerPath]: productApi.reducer,
+        [userAdminApi.reducerPath]: userAdminApi.reducer,
         auth: authReducer,
         editSlice: editReducer,
 
@@ -19,7 +21,8 @@ export const store = configureStore({
         getDefaultMiddleware().concat(
             apiSlice.middleware,
             categoryApi.middleware,
-            productApi.middleware
+            productApi.middleware,
+            userAdminApi.middleware
         ),
     devTools: true
 })

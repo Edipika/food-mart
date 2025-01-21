@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../common/admin/Layout';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { nullSuccessMsg } from '../editSlice';
+import { useGetAdminQuery, useDeleteAdminMutation } from './userAdminApi';
 
 function AdminList() {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const successMessage = useSelector((state) => state.editSlice.successMsg);
+    const { data: admins, isLoading, refetch } = useGetAdminQuery();
+    const [deleteAdmin, { isSuccess, isError, error }] = useDeleteAdminMutation()
+    useEffect(() => { refetch(); }, [refetch, isSuccess]);
+    if (isLoading) return <p>Loading...</p>;
     return (
         <>
             <Layout>
@@ -16,7 +25,17 @@ function AdminList() {
                             Add Admin
                         </button>
                     </div>
-
+                    {successMessage && (
+                        <div className="bg-green-700 p-1 rounded text-white flex justify-between items-center">
+                            <span>{successMessage}</span>
+                            <button
+                                onClick={() => dispatch(nullSuccessMsg())}
+                                className="bg-green-900 text-white px-2 py-1 rounded hover:bg-green-800 transition duration-200"
+                            >
+                                ×
+                            </button>
+                        </div>
+                    )}
                     <table className="min-w-full border-gray-200 rounded-lg">
                         {/* Table Header */}
                         <thead className="bg-slate-200">
@@ -25,30 +44,36 @@ function AdminList() {
                                 <th className="text-left p-4 border-b font-semibold">Name</th>
                                 <th className="text-left p-4 border-b font-semibold">email</th>
                                 <th className="text-left p-4 border-b font-semibold">Role</th>
-                                <th className="text-left p-4 border-b font-semibold">Edit</th>
+                                {/* <th className="text-left p-4 border-b font-semibold">Edit</th> */}
                                 <th className="text-left p-4 border-b font-semibold">Delete</th>
                             </tr>
                         </thead>
 
                         {/* Table Body */}
                         <tbody>
-                            <tr className="hover:bg-gray-50">
-                                <td className="p-4 border-b ">1</td>
-                                <td className="p-4 border-b">admin Name</td>
-                                <td className="p-4 border-b">Email</td>
-                                <td className="p-4 border-b">Role</td>
-                                <td className="p-4 border-b">
-                                    <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200">
-                                        Edit
-                                    </button>
-                                </td>
-                                <td className="p-4 border-b ">
-                                    <button className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-
+                            {admins && admins.length > 0 ? (
+                                admins.map((admin, index) => (
+                                    <tr key={admin.id} className="hover:bg-gray-50">
+                                        <td className="p-4 border-b">{index + 1}</td>
+                                        <td className="p-4 border-b">{admin.name}</td>
+                                        <td className="p-4 border-b">{admin.email}</td>
+                                        <td className="p-4 border-b">{admin.role}</td>
+                                        <td className="p-4 border-b">
+                                            <button
+                                                onClick={() => deleteAdmin(admin.id)}
+                                                className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" className="p-4 text-center">
+                                        No admins found.
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

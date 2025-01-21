@@ -9,6 +9,7 @@ function Login() {
 
     const userRef = useRef()
     const errRef = useRef()
+    const role = 3;
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
@@ -16,7 +17,7 @@ function Login() {
 
     const dispatch = useDispatch()
     //doudt on is loading
-    const [login, { isLoading }] = useLoginMutation()
+    const [login, { isLoading }] = useLoginMutation();
 
     useEffect(() => {
         userRef.current.focus()
@@ -29,7 +30,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const userData = await login({ user, pwd }).unwrap()
+            const userData = await login({ user, pwd, role }).unwrap()
             console.log(userData);
             console.log(user);
             dispatch(setCredentials({ ...userData, user }))
