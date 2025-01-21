@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
 import { BASE_URL } from '../../app/api/axios';
-import Layout from '../../admin/common/Layout';
+import Layout from '../../common/admin/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { startEditing } from '../editSlice';

@@ -1,4 +1,4 @@
-import Layout from "../components/common/Layout";
+import Layout from "../common/user/Layout";
 import fruits from '../assets/search_category/fruits-vegtable.webp';
 import products from '../assets/products/coconut.webp';
 import ProductCard from "../components/ProductCard";

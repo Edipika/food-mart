@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import Layout from '../common/Layout';
+import Layout from '../../common/admin/Layout';
+import { useNavigate } from 'react-router-dom';
 
-function CategoryList() {
-
+function AdminList() {
+    const navigate = useNavigate()
     return (
         <>
             <Layout>
                 <div className="m-10">
                     <div className="flex justify-between mb-4">
-                        <h2 className="text-2xl font-bold">Categories</h2>
+                        <h2 className="text-2xl font-bold">Admin List</h2>
                         <button
-                            // onClick={onAddCategory}
+                            onClick={() => (navigate('/addAdmin'))}
                             className="bg-gray-950 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition duration-200">
-                            Add Category
+                            Add Admin
                         </button>
                     </div>
 
@@ -22,6 +23,7 @@ function CategoryList() {
                             <tr>
                                 <th className="text-left p-4 border-b font-semibold">Sr No</th>
                                 <th className="text-left p-4 border-b font-semibold">Name</th>
+                                <th className="text-left p-4 border-b font-semibold">email</th>
                                 <th className="text-left p-4 border-b font-semibold">Role</th>
                                 <th className="text-left p-4 border-b font-semibold">Edit</th>
                                 <th className="text-left p-4 border-b font-semibold">Delete</th>
@@ -32,8 +34,9 @@ function CategoryList() {
                         <tbody>
                             <tr className="hover:bg-gray-50">
                                 <td className="p-4 border-b ">1</td>
-                                <td className="p-4 border-b">Category Name 1</td>
-                                <td className="p-4 border-b">Image</td>
+                                <td className="p-4 border-b">admin Name</td>
+                                <td className="p-4 border-b">Email</td>
+                                <td className="p-4 border-b">Role</td>
                                 <td className="p-4 border-b">
                                     <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200">
                                         Edit
@@ -54,6 +57,6 @@ function CategoryList() {
     );
 }
 
-export default CategoryList;
+export default AdminList;
 
 

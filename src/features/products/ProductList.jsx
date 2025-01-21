@@ -6,7 +6,7 @@ import { useDeleteProductMutation } from './productApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { startEditing ,nullSuccessMsg } from '../editSlice';
-import Layout from '../../admin/common/Layout';
+import Layout from '../../common/admin/Layout';
 
 function ProductList() {
     const navigate = useNavigate();

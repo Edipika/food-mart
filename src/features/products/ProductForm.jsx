@@ -3,7 +3,7 @@ import { useGetCategoryQuery } from '../category/categoryApi';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateProductMutation, useAddProductMutation } from './productApi';
 import { useSelector, useDispatch } from 'react-redux';
-import Layout from '../../admin/common/Layout';
+import Layout from '../../common/admin/Layout';
 import { stopEditing,setSuccessMsg } from '../editSlice';
 
 function ProductForm() {

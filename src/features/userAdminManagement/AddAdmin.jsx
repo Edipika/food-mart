@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
-export const AddAdmin = () => {
+function AddAdmin() {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -60,6 +60,7 @@ export const AddAdmin = () => {
         </div>
     )
 }
+export default AddAdmin
 
 
 

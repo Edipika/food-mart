@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../admin/common/Layout';
+import Layout from '../../common/admin/Layout';
 import { useGetCategoryQuery, useAddCategoryMutation, useUpdateCategoryMutation } from './categoryApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { stopEditing,setSuccessMsg } from '../editSlice';

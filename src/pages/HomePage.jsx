@@ -1,4 +1,4 @@
-import Layout from "../components/common/Layout";
+import Layout from "../common/user/Layout";
 import HeroSection from "../components/HeroSection";
 import CategoryCard from "../components/CategoryCard";
 
