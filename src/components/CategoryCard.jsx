@@ -25,10 +25,12 @@ function CategoryCard() {
 
                     {categories && categories.length > 0 ? (
                         categories.map((category, index) => (
-                            // for other normal size images
-                            <div key={index}>
-                                <img src={`${BASE_URL}${category.image_path}`} alt={`Category ${index + 1}`} />
-                            </div>
+                            category.parent_id === 1 ? (
+                                <div key={index} className="col-span-2">
+                                    <img src={`${BASE_URL}${category.image_path}`} alt={`Category ${index + 1}`} />
+                                </div>
+                            ) : null
+
                         ))
                     ) : (
                         <div>No categories available.</div>
@@ -40,81 +42,43 @@ function CategoryCard() {
 }
 
 export default CategoryCard;
+// function CategoryCard() {
+//     const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
+
+//     return (
+//         <>
+//             <div className="w-4/5 mx-auto m-11">
+//                 <h1 className="text-xl font-bold">Grocery & Kitchen</h1>
+//             </div>
+//             <div className="w-4/5 mx-auto">
+//                 <div className="grid grid-cols-8 grid-rows-5 place-items-center gap-y-3 gap-x-2">
+//                     {categories && categories.length > 0 ? (
+//                         categories.map((category, index) =>
+//                             category.parent_id === 1 ? (
+//                                 // For larger images
+//                                 <div key={index}  className={index === 0 ? "col-span-2" : ""}>
+//                                     <img
+//                                         src={`${BASE_URL}${category.image_path}`}
+//                                         alt={`Category ${index + 1}`}
+//                                     />
+//                                 </div>
+//                             ) : null
+//                         )
+//                     ) : (
+//                         <div>No categories available.</div>
+//                     )}
+//                 </div>
+//             </div>
+//         </>
+//     );
+// }
+
+// export default CategoryCard;
 
 
-// public function AddCategory(Request $data)
-//     {
-//         $validator = Validator::make($data->all(), [
-//             'type' => 'required|numeric|max:99999|between:1,10',
-//             'parent' => 'sometimes|nullable|numeric|exists:category,id|max:99999',
-//             'customSort' => 'required|numeric|max:99999',
-//             'name' => 'required|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
-//             'shortIntro' => 'sometimes|nullable|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
-//             'description' => 'sometimes|nullable|string|max:300|regex:/^[A-Za-z0-9\s]+$/',
-//             'schemaMarkup' => 'sometimes|nullable|string',
-//             'filetype' => 'required|array',
-//             'file' => 'required|array',
-//             'filetype.*' => 'required|numeric',
-//             'file.*' => 'required|file|mimes:jpeg,png,gif,mp4,avi,flv,xls,xlsx,mp3,wav',
-//         ]);
 
-//         if ($validator->fails()) {
-//             return response($validator->errors()->first(), 510);
-//         } else {
-//             try {
-//                 if (isset($data['parent']) && $data['parent'] != "") {
-//                     $parent = $data['parent'];
-//                     $level = Category::find($data['parent'])->level + 1;
-//                 } else {
-//                     $parent = null;
-//                     $level = 1;
-//                 }
-//                 $insertCategory = category::create([
-//                     "type" => $data['type'],
-//                     "parent" => $parent,
-//                     "level" => $level,
-//                     "custom_sort" => $data['customSort'],
-//                     "name" => $data['name'],
-//                     "short_intro" => $data['shortIntro'],
-//                     "description" => $data['description'],
-//                     "status" => 1,
-//                     "created_at" => Carbon::now(),
-//                     "updated_at" => Carbon::now(),
-//                 ]);
-//                 if ($data['parent'] == "") {
-//                     $insertCategory->parent = $insertCategory->id;
-//                     $insertCategory->save();
-//                 }
 
-//                 if (!empty($data['filetype'])) {
-//                     foreach ($data['filetype'] as $key => $type) {
-//                         $file = $data['file'][$key];
-//                         $path = "public/category/" . $insertCategory->id;
-//                         $file_path = "public/category/$insertCategory->id/" . $file->getClientOriginalName();
 
-//                         if (!Storage::disk('public')->exists("category/" . $insertCategory->id)) {
-//                             Storage::disk('public')->makeDirectory("category/" . $insertCategory->id);
-//                         }
-
-//                         if (!Storage::exists($file_path)) {
-//                             Storage::putFileAs($path, $file, $file->getClientOriginalName());
-//                             CategoryMediaDetail::create([
-//                                 "category_id" => $insertCategory->id,
-//                                 "type" => $type,
-//                                 "file_path" => $path,
-//                                 "file_name" => $file->getClientOriginalName(),
-//                                 "created_at" => Carbon::now(),
-//                                 "updated_at" => Carbon::now(),
-//                             ]);
-//                         }
-//                     }
-//                 }
-//                 return response('Category added', 200);
-//             } catch (Exception $e) {
-//                 return response($e->getMessage(), 510);
-//             }
-//         }
-//     }
 
 
 
