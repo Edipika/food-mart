@@ -30,14 +30,22 @@ function UsersList() {
 
             {/* Table Body */}
             <tbody>
-              {users.map((user, index) => (
-                <tr key={user.id} className="hover:bg-gray-50">
-                  <td className="p-4 border-b ">{index + 1}</td>
-                  <td className="p-4 border-b">{user.name}</td>
-                  <td className="p-4 border-b">{user.email}</td>
-                  <td className="p-4 border-b">{user.role}</td>
+              {users && users.length > 0 ? (
+                users.map((user, index) => (
+                  <tr key={user.id} className="hover:bg-gray-50">
+                    <td className="p-4 border-b ">{index + 1}</td>
+                    <td className="p-4 border-b">{user.name}</td>
+                    <td className="p-4 border-b">{user.email}</td>
+                    <td className="p-4 border-b">{user.role}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="p-4 text-center">
+                    No users found.
+                  </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

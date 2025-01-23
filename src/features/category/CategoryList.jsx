@@ -82,7 +82,8 @@ function CategoryList() {
 
                         {/* Table Body */}
                         <tbody>
-                            {categories.map((category, index) => (
+                            {categories && categories.length > 0 ? (
+                            categories.map((category, index) => (
                                 <tr key={category.id} className="hover:bg-gray-50" >
                                     <td className="p-4 border-b ">{index + 1}</td>
                                     <td className="p-4 border-b">
@@ -107,7 +108,14 @@ function CategoryList() {
                                             className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
                                     </td>
                                 </tr>
-                            ))}
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="p-4 text-center">
+                                    No Categories found.
+                                </td>
+                            </tr>
+                        )}
                         </tbody>
                     </table>
 

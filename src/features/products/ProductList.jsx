@@ -70,7 +70,8 @@ function ProductList() {
 
                     {/* Table Body */}
                     <tbody>
-                        {productArray.map((item, index) => (
+                        {productArray && productArray.length > 0 ? (
+                        productArray.map((item, index) => (
                             <tr key={item.product.id} className="hover:bg-gray-50">
                                 <td className="p-4 border-b">{index + 1}</td>
                                 <td className="p-4 border-b">
@@ -104,7 +105,14 @@ function ProductList() {
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5" className="p-4 text-center">
+                                No Products found.
+                            </td>
+                        </tr>
+                    )}
 
                     </tbody>
                 </table>
