@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { startEditing } from '../editSlice';
 import { useSelector } from 'react-redux';
-import {nullSuccessMsg} from '../editSlice';
+import { nullSuccessMsg } from '../editSlice';
 
 function CategoryList() {
     const navigate = useNavigate();
@@ -83,39 +83,39 @@ function CategoryList() {
                         {/* Table Body */}
                         <tbody>
                             {categories && categories.length > 0 ? (
-                            categories.map((category, index) => (
-                                <tr key={category.id} className="hover:bg-gray-50" >
-                                    <td className="p-4 border-b ">{index + 1}</td>
-                                    <td className="p-4 border-b">
-                                        <img
-                                            src={`${BASE_URL}${category.image_path}`}
-                                            alt={category.name}
-                                            className="w-16 h-16 object-cover rounded-md"
-                                        />
-                                    </td>
-                                    <td className="p-4 border-b">{category.name}</td>
-                                    <td className="p-4 border-b">
-                                        <button
-                                            onClick={() => handleEdit(category)}
-                                            className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                    <td className="p-4 border-b">
-                                        <button
-                                            onClick={() => handleDelete(category.id)}
-                                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
+                                categories.map((category, index) => (
+                                    <tr key={category.id} className="hover:bg-gray-50" >
+                                        <td className="p-4 border-b ">{index + 1}</td>
+                                        <td className="p-4 border-b">
+                                            <img
+                                                src={`${BASE_URL}${category.image_path}`}
+                                                alt={category.name}
+                                                className="w-16 h-16 object-cover rounded-md"
+                                            />
+                                        </td>
+                                        <td className="p-4 border-b">{category.name}</td>
+                                        <td className="p-4 border-b">
+                                            <button
+                                                onClick={() => handleEdit(category)}
+                                                className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition duration-200"
+                                            >
+                                                Edit
+                                            </button>
+                                        </td>
+                                        <td className="p-4 border-b">
+                                            <button
+                                                onClick={() => handleDelete(category.id)}
+                                                className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition duration-200">Delete</button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" className="p-4 text-center">
+                                        No Categories found.
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5" className="p-4 text-center">
-                                    No Categories found.
-                                </td>
-                            </tr>
-                        )}
+                            )}
                         </tbody>
                     </table>
 
