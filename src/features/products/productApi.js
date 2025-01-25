@@ -6,7 +6,7 @@ export const productApi = createApi({
     tagTypes: ['product'],
     endpoints: (builder) => ({
 
-        getProduct: builder.query({
+        getProducts: builder.query({
             query: () => 'products/show',
             providedTags: ['product']
         }),
@@ -35,15 +35,34 @@ export const productApi = createApi({
                 method: 'DELETE',
             }),
             invalidatesTags: ['product']
-        })
+        }),
+
+        getProduct: builder.query({
+            query: (productId) => ({
+                url:   `products/getProduct/${productId}`,
+                method: 'GET',
+            }),
+            providedTags: ['product']
+        }),
+
+        getProductsByCategory: builder.query({
+            query: (productId) => ({
+                url:   `/products/getByCategory/${productId}`,
+                method: 'GET',
+            }),
+            providedTags: ['product']
+        }),
+
     })
 });
 
 export const {
+    useGetProductsQuery,
     useGetProductQuery,
     useAddProductMutation,
     useUpdateProductMutation,
-    useDeleteProductMutation
+    useDeleteProductMutation,
+    useGetProductsByCategoryQuery
 } = productApi
 
 

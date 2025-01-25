@@ -1,8 +1,6 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../../app/api/axios';
-import { useGetProductQuery } from './productApi';
-import { useDeleteProductMutation } from './productApi';
+import { useGetProductsQuery,useDeleteProductMutation } from './productApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { startEditing ,nullSuccessMsg } from '../editSlice';
@@ -12,7 +10,7 @@ function ProductList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { data: products, isLoading, refetch } = useGetProductQuery();
+    const { data: products, isLoading, refetch } = useGetProductsQuery();
     const productArray = products?.data || [];
 
     const [deleteProduct, { isSuccess, isError, error }] = useDeleteProductMutation();

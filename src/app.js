@@ -11,6 +11,7 @@ import ProductList from './features/products/ProductList.jsx';
 import AddAdmin from './features/userAdminManagement/AddAdmin.jsx';
 import AdminList from './features/userAdminManagement/AdminList.jsx';
 import UsersList from './features/userAdminManagement/UsersList.jsx';
+import ExploreCategories from './pages/ExploreCategories.jsx';
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
       <Route path="welcome" element={<HomePage />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      <Route path="search" element={<SearchPage />} />
+      <Route path="explore/:categoryId" element={<ExploreCategories />} />
       <Route path="productDetails" element={<ProductDetails />} />
 
 
