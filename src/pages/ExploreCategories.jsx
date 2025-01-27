@@ -8,28 +8,28 @@ import { BASE_URL } from "../app/api/axios";
 
 const ExploreCategories = () => {
     const { categoryId } = useParams();
-    // const [selectedCategory, setSelectedCategory] = useState()
-    // const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
-    const { data: products, isLoading: productsLoading } = useGetProductsByCategoryQuery(8);
+    const [selectedCategory, setSelectedCategory] = useState()
+    const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
+    const { data: products, isLoading: productsLoading } = useGetProductsByCategoryQuery(selectedCategory);
 
-    // useEffect(() => {
-    //     if (categories && categories.length > 0) {
-    //         const filteredCategories = categories.filter(category => category.parent_id == Number(categoryId));
-    //         if (filteredCategories.length > 0) {
-    //             setSelectedCategory(filteredCategories[0].id);
-    //         }
-    //     }
-    // }, [categories, categoryId]);
+    useEffect(() => {
+        if (categories && categories.length > 0) {
+            const filteredCategories = categories.filter(category => category.parent_id == Number(categoryId));
+            if (filteredCategories.length > 0) {
+                setSelectedCategory(filteredCategories[0].id);
+            }
+        }
+    }, [categories, categoryId]);
 
 
     if (productsLoading) return <p>Loading...</p>;
-    console.log("products fetched", products);
+    // console.log("products fetched", products);
     return (
         <div>
             <Layout>
                 <div className="flex w-[85%] m-auto">
                     {/* side panel to display subcategory */}
-                    {/* <div className="w-1/6 flex flex-col border-r border-l-white h-screen overflow-y-auto scrollbar-hide">
+                    <div className="w-1/6 flex flex-col border-r border-l-white h-screen overflow-y-auto scrollbar-hide">
                         {categories && categories.length > 0 ? (
                             categories
                                 .filter(category => category.parent_id == Number(categoryId))
@@ -48,7 +48,7 @@ const ExploreCategories = () => {
                         ) : (
                             <div>No categories available.</div>
                         )}
-                    </div> */}
+                    </div>
 
                     {/* product display section */}
                     <div className="w-full h-screen overflow-y-auto scrollbar-hide ">
@@ -67,13 +67,11 @@ const ExploreCategories = () => {
                             ) : (
                                 <p>No products found for this subcategory.</p>
                             )} */}
-
-                            {products && products?.data?.length > 0 ? (
+                            {productsLoading ? (
+                                <p>Loading products...</p>
+                            ) : products && products?.data?.length > 0 ? (
                                 products.data.map((item) => (
-                                    // <ProductCard key={product.id} product={product} />
-                                    <div key={item.product.id}>
-                                        <div>hello</div>
-                                    </div>
+                                    <ProductCard key={item.product.id} item={item} />
 
                                 ))
                             ) : (
