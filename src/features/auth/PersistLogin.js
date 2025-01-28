@@ -23,11 +23,11 @@ const PersistLogin = () => {
                 // Use the standalone refresh token query
                 const response = await refreshTokenQuery(api);
                 console.log("Response from refresh endpoint1", response);
-                if (response) {
-                    console.log("Response from refresh endpoint", response);
-                } else {
-                    console.error("Failed to refresh token");
-                }
+                // if (response) {
+                //     console.log("Response from refresh endpoint", response);
+                // } else {
+                //     console.error("Failed to refresh token");
+                // }
             } catch (err) {
                 console.error("Refresh token failed", err);
             } finally {
@@ -41,7 +41,7 @@ const PersistLogin = () => {
         }
     }, [token, dispatch]);
 
-    if (isLoading ) return <p>Loading...</p>;
+    if (isLoading) return <p>Loading...</p>;
 
     return <Outlet />;
 };

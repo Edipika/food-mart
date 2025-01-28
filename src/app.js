@@ -12,6 +12,7 @@ import AddAdmin from './features/userAdminManagement/AddAdmin.jsx';
 import AdminList from './features/userAdminManagement/AdminList.jsx';
 import UsersList from './features/userAdminManagement/UsersList.jsx';
 import ExploreCategories from './pages/ExploreCategories.jsx';
+import PersistLogin from './features/auth/PersistLogin.js';
 
 
 function App() {
@@ -27,16 +28,17 @@ function App() {
 
 
       {/* Admin Routes */}
-      <Route path="admin" element={<AdminList />} />
-      <Route path="addAdmin" element={<AddAdmin />} />
-      <Route path="userlist" element={<UsersList />} />
+      <Route element={<PersistLogin />}>
+        <Route path="admin" element={<AdminList />} />
+        <Route path="addAdmin" element={<AddAdmin />} />
+        <Route path="userlist" element={<UsersList />} />
 
-      <Route path="product" element={<ProductList />} />
-      <Route path="addproduct" element={<AddProduct />} />
+        <Route path="product" element={<ProductList />} />
+        <Route path="addproduct" element={<AddProduct />} />
 
-      <Route path="category" element={<CategoryList />} />
-      <Route path="addcategory" element={<AddCategory />} />
-
+        <Route path="category" element={<CategoryList />} />
+        <Route path="addcategory" element={<AddCategory />} />
+      </Route>
     </Routes>
   );
 }
