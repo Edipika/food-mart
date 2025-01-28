@@ -3,6 +3,7 @@ import { AiOutlineRight } from 'react-icons/ai';
 import { useParams } from "react-router-dom";
 import { useGetProductQuery } from '../features/products/productApi';
 import { BASE_URL } from "../app/api/axios";
+import { TbTruckDelivery } from "react-icons/tb";
 
 
 const ProductDetails = () => {
@@ -75,7 +76,8 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                             <div className="flex items-start space-x-3">
-                                <img src="/path-to-icon-3.png" alt="Delivery Icon" className="w-8 h-8" />
+                            <TbTruckDelivery />
+                                {/* <img src="/path-to-icon-3.png" alt="Delivery Icon" className="w-8 h-8" /> */}
                                 <div>
                                     <h3 className="font-semibold">Get free delivery</h3>
                                     <p className="text-sm text-gray-600">
