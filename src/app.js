@@ -23,7 +23,7 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="explore/:categoryId" element={<ExploreCategories />} />
-      <Route path="productDetails" element={<ProductDetails />} />
+      <Route path="productDetails/:productId" element={<ProductDetails />} />
 
 
       {/* Admin Routes */}

@@ -55,18 +55,6 @@ const ExploreCategories = () => {
                         <div className="text-3xl font-semibold m-8">sub category </div>
                         {/* item card */}
                         <div className="grid grid-cols-6 gap-y-6 gap-x-2 m-5 p-3">
-                            {/* {products?.data?.length > 0 ? (
-                                products.data.map((item) => (
-                                    <div key={item.product.id}>
-                                        <div>{item.product.name}</div> 
-                                        <img src={`${BASE_URL}${item.metaData.image_path}`} alt={item.product.name} />
-                                        <p>{item.product.description}</p>
-                                        <p>Price: {item.product.price}</p>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No products found for this subcategory.</p>
-                            )} */}
                             {productsLoading ? (
                                 <p>Loading products...</p>
                             ) : products && products?.data?.length > 0 ? (

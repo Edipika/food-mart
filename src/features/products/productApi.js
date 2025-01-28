@@ -9,7 +9,7 @@ export const productApi = createApi({
         getProducts: builder.query({
             query: () => 'products/show',
             providedTags: ['product']
-        }),
+        }),//to show products in admin panel
 
         addProduct: builder.mutation({
             query: (product) => ({
@@ -43,7 +43,7 @@ export const productApi = createApi({
                 method: 'GET',
             }),
             providedTags: ['product']
-        }),
+        }),//to get a single product in product details page
 
         getProductsByCategory: builder.query({
             query: (productId) => ({

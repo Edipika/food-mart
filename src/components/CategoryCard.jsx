@@ -27,15 +27,12 @@ function CategoryCard() {
                                             className={` ${index === 0 ? "col-span-2" : ""}`}
                                         >
                                             <Link to={`/explore/${category.id}`}>
-                                            {category.id}
                                                 <img
                                                     className="w-full h-auto object-cover rounded-lg"
                                                     src={`${BASE_URL}${category.image_path}`}
                                                     alt={`Category ${index + 1}`}
                                                 />
                                             </Link>
-
-
                                         </div>
                                     ))
                             ) : (
@@ -55,7 +52,7 @@ function CategoryCard() {
                                         <div
                                             key={index}
                                         >
-                                            <Link to="/explore">
+                                            <Link to={`/explore/${category.id}`}>
                                                 <img
                                                     className="w-full h-auto object-cover rounded-lg"
                                                     src={`${BASE_URL}${category.image_path}`}

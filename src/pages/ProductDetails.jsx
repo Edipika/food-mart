@@ -1,8 +1,16 @@
 import Layout from "../common/user/Layout";
-import { AiOutlineRight } from 'react-icons/ai'; 
+import { AiOutlineRight } from 'react-icons/ai';
+import { useParams } from "react-router-dom";
+import { useGetProductQuery } from '../features/products/productApi';
+import { BASE_URL } from "../app/api/axios";
 
 
 const ProductDetails = () => {
+    const { productId } = useParams();
+    const { data: item, isLoading } = useGetProductQuery(productId);
+    console.log(item);
+    if (isLoading) return <div>Loading...</div>;
+
     return (
         <Layout>
             {/* Breadcrumb */}
@@ -16,28 +24,27 @@ const ProductDetails = () => {
                 </div>
             </div>
 
-            {/* Main content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 py-8">
-                {/* Product Image Carousel */}
+                {/* Product Image Carousel  */}
                 <div className="w-full">
                     <div className="relative">
-                        <img 
-                            className="rounded-lg w-full" 
-                            src="/path-to-tender-coconut.jpg" 
+                        <img
+                            className="rounded-lg w-full"
+                            src={`${BASE_URL}/${item.productMetaData[0]?.image_path}`}
                             alt="Tender Coconut"
                         />
-                        {/* Add your carousel controls here */}
+                        {/* Add your carousel controls here  */}
                     </div>
                 </div>
 
-                {/* Product Details */}
+                {/* Product Details  */}
                 <div>
-                    <h1 className="text-2xl font-bold">Tender Coconut</h1>
+                    <h1 className="text-2xl font-bold">{item.product.name}</h1>
                     <p className="text-gray-600 mt-2">1 pc (Approx. 200 - 250 ml)</p>
 
                     {/* Pricing */}
                     <div className="flex items-center space-x-2 mt-4">
-                        <span className="text-3xl font-bold text-gray-900">₹80</span>
+                        <span className="text-3xl font-bold text-gray-900">₹{item.product.price}</span>
                         <span className="text-lg line-through text-gray-400">₹123</span>
                         <span className="text-lg text-purple-600 font-semibold">34% Off</span>
                     </div>
@@ -81,16 +88,20 @@ const ProductDetails = () => {
                 </div>
             </div>
 
-            {/* About Product Section */}
+            {/* About Product Section  */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
                 <h2 className="text-xl font-bold mb-4">About Product</h2>
                 <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                    <li>Description: The water of a tender coconut is nothing, but the endosperm of the coconut and it is one of the most nutritious beverages available to us. This nutritious water is what matures and forms the flesh of the coconut over time. Tender coconut water is the liquid and not the milk of the coconut.</li>
+                    <li>Description: {item.product.description}.</li>
                     <li>Country of Origin: India</li>
                     <li>Shelf Life: 4 days</li>
                     <li>How to Use: Tender coconut flesh can be used for ice creams.</li>
                 </ul>
             </div>
+
+
+
+
         </Layout>
     );
 };
