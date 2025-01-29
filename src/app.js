@@ -30,7 +30,7 @@ function App() {
       <Route path="welcome" element={<HomePage />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      {/* <Route path="explore/:categoryId" element={<ExploreCategories />} /> */}
+      <Route path="explore/:categoryId" element={<ExploreCategories />} />
       <Route path="productDetails/:productId" element={<ProductDetails />} />
       <Route path="unauthorized" element={<Unauthorized />} />
 
@@ -40,7 +40,7 @@ function App() {
         {/* both admin and superadmin allowed */}
         <Route element={<RequireAuth allowedRoles={[ROLES.admin, ROLES.superAdmin]} />}>
           <Route path="admin" element={<AdminList />} />
-          <Route path="explore/:categoryId" element={<ExploreCategories />} />
+          {/* <Route path="explore/:categoryId" element={<ExploreCategories />} /> */}
           <Route path="userlist" element={<UsersList />} />
 
           <Route path="product" element={<ProductList />} />
