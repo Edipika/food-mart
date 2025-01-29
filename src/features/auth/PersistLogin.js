@@ -13,21 +13,14 @@ const PersistLogin = () => {
     useEffect(() => {
         const verifyRefreshToken = async () => {
             console.log("Inside function");
-
             try {
                 const api = {
                     dispatch,
                     getState: () => ({ auth: { token, user: null } }), // Provide a mock `getState` function
                 };
-
                 // Use the standalone refresh token query
                 const response = await refreshTokenQuery(api);
                 console.log("Response from refresh endpoint1", response);
-                // if (response) {
-                //     console.log("Response from refresh endpoint", response);
-                // } else {
-                //     console.error("Failed to refresh token");
-                // }
             } catch (err) {
                 console.error("Refresh token failed", err);
             } finally {
