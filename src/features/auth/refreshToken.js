@@ -15,15 +15,16 @@ const refreshTokenQuery = async (api) => {
             // Update credentials in the Redux store
             const user = api.getState().auth.user;
             api.dispatch(setCredentials({ ...refreshResult.data, user }));
-
+            console.log("refresh token set");
             return refreshResult.data; // Return refreshed token data
         } else {
             console.error("Failed to refresh token. Logging out...");
-            // api.dispatch(logOut());
+            api.dispatch(logOut());
             return null;
         }
     } catch (error) {
         console.error("Error hitting refresh endpoint:", error);
+        api.dispatch(logOut());
         return null;
     }
 };

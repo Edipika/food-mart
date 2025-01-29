@@ -31,9 +31,8 @@ function Login() {
         e.preventDefault()
         try {
             const userData = await login({ user, pwd, role }).unwrap()
-            console.log(userData);
-            console.log(user);
-            dispatch(setCredentials({ ...userData, user }))
+            console.log("user data after logging in ",userData);
+            dispatch(setCredentials({ ...userData }))
             setUser('')
             setPwd('')
             navigate('/welcome')
@@ -66,7 +65,7 @@ function Login() {
                             ref={userRef}
                             value={user}
                             onChange={(e) => setUser(e.target.value)}
-                            autoComplete="off"
+                            // autoComplete="off"
                             className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
                             placeholder="example@example.com"
                             required

@@ -5,7 +5,6 @@ const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:5000',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        console.log('Current State:', getState());
         const token = getState().auth.token;
         console.log("Token from state:",token);
         if (token) {
