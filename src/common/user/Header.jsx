@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart, AiOutlineDown } from 'react-icons/ai';
 import { logOut } from "../../features/auth/authSlice";
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
+import CartPanel from '../../features/cart/CartPanel';
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -72,13 +73,18 @@ const Header = () => {
 
                     {/* Cart Icon */}
                     <div className="flex-shrink-0">
-                        <div className="relative">
+                        <div className="relative cursor-pointer" onClick={() => setIsOpen(true)}>
                             <AiOutlineShoppingCart className="text-gray-700 mr-10" size={28} />
                             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] rounded-full px-2 py-1 mr-10">
                                 1
                             </span>
                         </div>
                     </div>
+
+                    {/* Side Panel Component */}
+                    <CartPanel isOpen={isOpen} setIsOpen={setIsOpen} />
+
+
                 </div>
             </div>
         </header>
