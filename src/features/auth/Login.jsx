@@ -35,7 +35,7 @@ function Login() {
             dispatch(setCredentials({ ...userData }))
             setUser('')
             setPwd('')
-            navigate('/welcome')
+            navigate('/product')
         } catch (err) {
             if (!err?.originalStatus) {
                 // isLoading: true until timeout occurs

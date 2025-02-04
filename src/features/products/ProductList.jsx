@@ -73,9 +73,9 @@ function ProductList() {
                             <tr key={item.product.id} className="hover:bg-gray-50">
                                 <td className="p-4 border-b">{index + 1}</td>
                                 <td className="p-4 border-b">
-                                    {item.metaData?.image_path ? (
+                                    {item.product?.image_path ? (
                                         <img
-                                            src={`${BASE_URL}/${item.metaData.image_path}`}
+                                            src={`${BASE_URL}/${item.product.image_path}`}
                                             alt={item.product.name}
                                             className="w-16 h-16 object-cover rounded-md"
                                         />

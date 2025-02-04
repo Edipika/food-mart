@@ -31,7 +31,7 @@ const ProductDetails = () => {
                     <div className="relative">
                         <img
                             className="rounded-lg w-full"
-                            src={`${BASE_URL}/${item.productMetaData[0]?.image_path}`}
+                            src={`${BASE_URL}/${item.image_path}`}
                             alt="Tender Coconut"
                         />
                         {/* Add your carousel controls here  */}
@@ -40,12 +40,12 @@ const ProductDetails = () => {
 
                 {/* Product Details  */}
                 <div>
-                    <h1 className="text-2xl font-bold">{item.product.name}</h1>
+                    <h1 className="text-2xl font-bold">{item.name}</h1>
                     <p className="text-gray-600 mt-2">1 pc (Approx. 200 - 250 ml)</p>
 
                     {/* Pricing */}
                     <div className="flex items-center space-x-2 mt-4">
-                        <span className="text-3xl font-bold text-gray-900">₹{item.product.price}</span>
+                        <span className="text-3xl font-bold text-gray-900">₹{item.price}</span>
                         <span className="text-lg line-through text-gray-400">₹123</span>
                         <span className="text-lg text-purple-600 font-semibold">34% Off</span>
                     </div>
@@ -94,7 +94,7 @@ const ProductDetails = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
                 <h2 className="text-xl font-bold mb-4">About Product</h2>
                 <ul className="list-disc pl-5 space-y-2 text-gray-600">
-                    <li>Description: {item.product.description}.</li>
+                    <li>Description: {item.description}.</li>
                     <li>Country of Origin: India</li>
                     <li>Shelf Life: 4 days</li>
                     <li>How to Use: Tender coconut flesh can be used for ice creams.</li>

@@ -13,7 +13,8 @@ const RequireAuth = ({ allowedRoles }) => {
     return (
         token && allowedRoles.includes(role)
             ? <Outlet />
-            : token ? <Navigate to="/unauthorized" state={{ from: location }} /> : <Navigate to="/login" state={{ from: location }} />
+            // : token ? <Navigate to="/unauthorized" state={{ from: location }} /> 
+           : <Navigate to="/login" state={{ from: location }} />
     )
 }
 export default RequireAuth

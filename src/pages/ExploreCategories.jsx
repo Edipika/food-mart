@@ -57,9 +57,9 @@ const ExploreCategories = () => {
                         <div className="grid grid-cols-6 gap-y-6 gap-x-2 m-5 p-3">
                             {productsLoading ? (
                                 <p>Loading products...</p>
-                            ) : products && products?.data?.length > 0 ? (
-                                products.data.map((item) => (
-                                    <ProductCard key={item.product.id} item={item} />
+                            ) : products && products?.length > 0 ? (
+                                products.map((item) => (
+                                    <ProductCard key={item.id} item={item} />
 
                                 ))
                             ) : (
