@@ -14,7 +14,7 @@ const ExploreCategories = () => {
 
     useEffect(() => {
         if (categories && categories.length > 0) {
-            const filteredCategories = categories.filter(category => category.parent_id == Number(categoryId));
+            const filteredCategories = categories.filter(category => category.parent_id === Number(categoryId));
             if (filteredCategories.length > 0) {
                 setSelectedCategory(filteredCategories[0].id);
             }
@@ -32,7 +32,7 @@ const ExploreCategories = () => {
                     <div className="w-1/6 flex flex-col border-r border-l-white h-screen overflow-y-auto scrollbar-hide">
                         {categories && categories.length > 0 ? (
                             categories
-                                .filter(category => category.parent_id == Number(categoryId))
+                                .filter(category => category.parent_id === Number(categoryId))
                                 .map((category, index) => (
                                     <div key={index} className="flex mb-2 px-3 cursor-pointer" onClick={() => setSelectedCategory(category.id)} >
                                         <img
