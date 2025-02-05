@@ -6,6 +6,8 @@ import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart, AiOutlineDown } 
 import { logOut } from "../../features/auth/authSlice";
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
 import CartPanel from '../../features/cart/CartPanel';
+import totalProductQuantity from '../../features/cart/cartSlice';
+
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,10 @@ const Header = () => {
         await logout();
         dispatch(logOut());
     };
+
+    const totalQuantity = useSelector(state => {
+        return state.cart?.products?.reduce((sum, product) => sum + product.quantity, 0);
+    });
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
             <div className="max-w-8xl  mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -76,7 +82,7 @@ const Header = () => {
                         <div className="relative cursor-pointer" onClick={() => setIsOpen(true)}>
                             <AiOutlineShoppingCart className="text-gray-700 mr-10" size={28} />
                             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] rounded-full px-2 py-1 mr-10">
-                                1
+                                {totalQuantity}
                             </span>
                         </div>
                     </div>

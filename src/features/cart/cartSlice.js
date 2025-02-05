@@ -11,23 +11,21 @@ const saveCartToLocalStorage = (cartItems) => {
 
 const cartSlice = createSlice({
     name: 'cart',
-    initialState: { items: loadCartFromLocalStorage() },
+    initialState: { products: loadCartFromLocalStorage() || [] },
     reducers: {
-        addToCart(state, action) {
+        saveTocart(state, action) {
             const { productId, quantity } = action.payload;
-            const existingProduct = state.items.find((item) => item.productId === productId);
+            const existingProduct = state.products.find((product) => product.productId === productId);
             if (existingProduct) {
-                existingProduct.quantity += quantity;
+                existingProduct.quantity = quantity;
             } else {
-                state.items.push({ productId, quantity });
+                state.products.push({ productId, quantity });
             }
-            saveCartToLocalStorage(state.items);
+            // state.totalQuantity = state.products.reduce((sum, product) => sum + product.quantity, 0);
+           saveCartToLocalStorage(state.products);
         },
-        removeFromCart(state, action) {
-
-        }
     }
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { saveTocart,} = cartSlice.actions;
 export default cartSlice.reducer;

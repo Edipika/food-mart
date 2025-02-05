@@ -5,6 +5,7 @@ import { categoryApi } from "../features/category/categoryApi";
 import { productApi } from "../features/products/productApi";
 import { userAdminApi } from "../features/userAdminManagement/userAdminApi";
 import editReducer from "../features/editSlice";
+import cartReducer from '../features/cart/cartSlice' 
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         [userAdminApi.reducerPath]: userAdminApi.reducer,
         auth: authReducer,
         editSlice: editReducer,
+        cart:cartReducer,
 
     },
     middleware: getDefaultMiddleware =>
