@@ -6,7 +6,6 @@ import { productApi } from "../features/products/productApi";
 import { userAdminApi } from "../features/userAdminManagement/userAdminApi";
 import editReducer from "../features/editSlice";
 import cartReducer from '../features/cart/cartSlice' ;
-import { listApi } from "../features/cart/listApi";
 import {cartApi} from "../features/cart/cartApi";
 
 // console.log("cartApi:", cartApi);
@@ -20,7 +19,6 @@ export const store = configureStore({
         auth: authReducer,
         editSlice: editReducer,
         cartSlice:cartReducer,
-        [listApi.reducerPath]: listApi.reducer,
         [cartApi.reducerPath]: cartApi.reducer,
 
     },
@@ -30,7 +28,6 @@ export const store = configureStore({
             categoryApi.middleware,
             productApi.middleware,           
             userAdminApi.middleware,  
-            listApi.middleware,
             cartApi.middleware
         ),
     devTools: true
