@@ -11,7 +11,7 @@ export const cartApi = createApi({
                 method: 'POST',
                 body: { products: cart }
             }),
-            // invalidatesTags: ['Cart']
+            invalidatesTags: ['Cart']
         }),
     })
 });
