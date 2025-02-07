@@ -20,7 +20,7 @@ const Header = () => {
     };
 
     const totalQuantity = useSelector(state => {
-        return state.cart?.products?.reduce((sum, product) => sum + product.quantity, 0);
+        return state.cartSlice?.products?.reduce((sum, product) => sum + product.quantity, 0);
     });
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
@@ -89,8 +89,6 @@ const Header = () => {
 
                     {/* Side Panel Component */}
                     <CartPanel isOpen={isOpen} setIsOpen={setIsOpen} />
-
-
                 </div>
             </div>
         </header>

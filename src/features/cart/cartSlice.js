@@ -10,7 +10,7 @@ const saveCartToLocalStorage = (cartItems) => {
 };
 
 const cartSlice = createSlice({
-    name: 'cart',
+    name: 'cartSlice',
     initialState: { products: loadCartFromLocalStorage() || [] },
     reducers: {
         saveTocart(state, action) {
