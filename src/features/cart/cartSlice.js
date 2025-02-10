@@ -8,10 +8,13 @@ const loadCartFromLocalStorage = () => {
 const saveCartToLocalStorage = (cartItems) => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
 };
+const initialState = {
+    products: loadCartFromLocalStorage() || []
+};
 
 const cartSlice = createSlice({
     name: 'cartSlice',
-    initialState: { products: loadCartFromLocalStorage() || [] },
+    initialState,
     reducers: {
         saveTocart(state, action) {
             const { productId, quantity } = action.payload;
@@ -27,5 +30,6 @@ const cartSlice = createSlice({
     }
 });
 
-export const { saveTocart,} = cartSlice.actions;
+export const { saveTocart} = cartSlice.actions;
+// export const selectCartProducts = (state) => state.cart.products;
 export default cartSlice.reducer;

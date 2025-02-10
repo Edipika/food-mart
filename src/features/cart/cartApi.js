@@ -6,11 +6,14 @@ export const cartApi = createApi({
     tagTypes: ['Cart'],
     endpoints: (builder) => ({
         getCartProducts: builder.mutation({
-            query: (cart) => ({
-                url: 'cart/update',
-                method: 'POST',
-                body: { products: cart }
-            }),
+            query: (cart) => {
+                console.log("Sending request to cart API with:", cart); 
+                return {
+                    url: 'cart/update',
+                    method: 'POST',
+                    body: { products: cart }
+                };
+            },
             invalidatesTags: ['Cart']
         }),
     })

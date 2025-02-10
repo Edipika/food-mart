@@ -1,18 +1,17 @@
 import products from '../assets/products/coconut.webp';
 import { Link } from 'react-router-dom';
 import { BASE_URL } from "../app/api/axios";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { saveTocart, } from '../features/cart/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ProductCard({ item }) {// product card elemets that is there in explore categories page
     const dispatch = useDispatch();
     const productId = item.id;
-   
+
     const quantity = useSelector(state => {
-        return state.cart?.products?.find(product => product.productId === productId)?.quantity || 0;
+        return state.cartSlice?.products?.find(product => product.productId === productId)?.quantity || 0
     });
- 
     const increment = ()=>{
         dispatch(saveTocart({ productId, quantity: quantity + 1 }));
     }
@@ -41,7 +40,7 @@ function ProductCard({ item }) {// product card elemets that is there in explore
                         Rs.{item.price}
                     </h4>
                 </Link>
-                {quantity === 0 ? (
+                {quantity <= 0 ? (
                     <button
                         onClick={increment}
                         className="text-red-600 font-semibold border border-red-600 p-2 w-full rounded-md"
