@@ -54,7 +54,7 @@ function Register() {
                 : (
                     <div className="h-screen w-full  flex justify-center items-center">
                         <div className="w-1/4 bg-orange-100 flex flex-col justify-center items-center p-6 rounded-lg shadow-lg">
-                            <h2 className="text-2xl font-bold mb-4 text-gray-950">Register</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-gray-950">Admin Register</h2>
                             <form onSubmit={handleSubmit} className="w-full">
                                 <div className="mb-4">
                                     <label htmlFor="username" className="block text-gray-950 mb-1">Enter Username:</label>

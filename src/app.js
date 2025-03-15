@@ -51,9 +51,9 @@ function App() {
         </Route>
 
         {/* only superadmin allowed */}
-        <Route element={<RequireAuth allowedRoles={[ROLES.superAdmin]} />}>
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.superAdmin]} />}>
           <Route path="addAdmin" element={<AddAdmin />} />
-        </Route>
+        </Route> */}
       </Route>
     </Routes>
   );
