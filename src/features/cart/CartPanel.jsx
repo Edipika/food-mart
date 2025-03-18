@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useGetCartProductsMutation } from '../../features/cart/cartApi';
 import { BASE_URL } from '../../app/api/axios';
 import { saveTocart } from '../../features/cart/cartSlice';
-import { useState } from 'react';
+import { useState,useCallback } from 'react';
 
 function CartPanel({ isOpen, setIsOpen }) {
     const [cartData, setCartData] = useState(null);
@@ -15,17 +15,27 @@ function CartPanel({ isOpen, setIsOpen }) {
     const [getCartDetails] = useGetCartProductsMutation();
     const products = useSelector(state => state.cartSlice?.products || []);
 
-    const fetchCartData = async () => {
-        try {
-            const response = await getCartDetails(products).unwrap();
-            setCartData(response.cart);
-            setCartItems(response.cartItems || []);
-            console.log("cart items backend response: ",response.cartItems)
+    // const fetchCartData = async () => {
+    //     try {
+    //         const response = await getCartDetails(products).unwrap();
+    //         setCartData(response.cart);
+    //         setCartItems(response.cartItems || []);
+    //         console.log("cart items backend response: ",response.cartItems)
             
+    //     } catch (error) {
+    //         console.error("Error fetching cart:", error);
+    //     }
+    // };
+    const fetchCartData = useCallback(async () => {
+        try {
+          const response = await getCartDetails(products).unwrap();
+          setCartData(response.cart);
+          setCartItems(response.cartItems || []);
+          console.log("Cart items backend response:", response.cartItems);
         } catch (error) {
-            console.error("Error fetching cart:", error);
+          console.error("Error fetching cart:", error);
         }
-    };
+      }, [products,getCartDetails]);
 
     // console.log("Response from the result", cartItems);
     const increment = (productId, quantity) => {
@@ -39,7 +49,7 @@ function CartPanel({ isOpen, setIsOpen }) {
     useEffect(() => {
         console.log("products",products)
         fetchCartData();
-    }, [products])
+    }, [products,fetchCartData])
     // console.log("cart items variable: ",cartItems);a
     if (!isOpen) return null;
     return (
