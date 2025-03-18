@@ -40,7 +40,7 @@ function CartPanel({ isOpen, setIsOpen }) {
         console.log("products",products)
         fetchCartData();
     }, [products])
-    console.log("cart items variable: ",cartItems);
+    // console.log("cart items variable: ",cartItems);a
     if (!isOpen) return null;
     return (
 
