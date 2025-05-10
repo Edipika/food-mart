@@ -12,9 +12,10 @@ import AddAdmin from './features/userAdminManagement/AddAdmin.jsx';
 import AdminList from './features/userAdminManagement/AdminList.jsx';
 import UsersList from './features/userAdminManagement/UsersList.jsx';
 import ExploreCategories from './pages/ExploreCategories.jsx';
-import PersistLogin from './features/auth/PersistLogin.js';
-import RequireAuth from './features/auth/RequireAuth.js';
-import Unauthorized from './features/auth/Unauthorized.js';
+import PersistLogin from './features/auth/PersistLogin.jsx';
+import RequireAuth from './features/auth/RequireAuth.jsx';
+import Unauthorized from './features/auth/Unauthorized.jsx';
+import React from 'react';
 
 const ROLES = {
   'superAdmin': 1,
@@ -22,10 +23,11 @@ const ROLES = {
   'user': 3,
 }
 
+// the unauthorized error is because token is not persisting across request 
+
 function App() {
   return (
     <Routes>
-
       <Route index element={<HomePage />} />
       <Route path="welcome" element={<HomePage />} />
       <Route path="login" element={<Login />} />

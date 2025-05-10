@@ -3,7 +3,7 @@ import atta from '../assets/category/category1/BAtta-Rice-Dal.webp';
 import { Link } from 'react-router-dom';
 import { useGetCategoryQuery } from '../features/category/categoryApi';
 import { BASE_URL } from '../../src/app/api/axios';
-
+import React from 'react';
 
 function CategoryCard() {
     const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();

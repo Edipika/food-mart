@@ -1,6 +1,7 @@
 import Veggies from '../assets/common/Veggies.png';
 import Smothie from '../assets/common/Smothie.png';
 import Bakery from '../assets/common/Bakery.png';
+import React from 'react';
 
 const Card = ({ title, subtitle, imageUrl }) => {
     return (

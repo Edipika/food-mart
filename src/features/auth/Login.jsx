@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
@@ -10,10 +10,12 @@ function Login() {
     const userRef = useRef()
     const errRef = useRef()
     const role = 3;
-    const [user, setUser] = useState('')
+    const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
+ const token = useSelector(state => state.auth.token);
+
 
     const dispatch = useDispatch()
     //doudt on is loading
@@ -25,25 +27,28 @@ function Login() {
 
     useEffect(() => {
         setErrMsg('')
-    }, [user, pwd])
+    }, [ email, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const userData = await login({ user, pwd, role }).unwrap()
-            console.log("user data after logging in ",userData);
+            const userData = await login({ email, pwd, role }).unwrap()
+            console.log("user data after logging in ", userData);
+            console.log("userData",userData)
             dispatch(setCredentials({ ...userData }))
-            setUser('')
+            setEmail('')
             setPwd('')
+           console.log('Token from Redux State:', token); 
             navigate('/product')
         } catch (err) {
-            if (!err?.originalStatus) {
+            console.error("ERROR occoured during login",err); 
+            if (!err?.status) {
                 // isLoading: true until timeout occurs
                 setErrMsg('No Server Response');
-            } else if (err.originalStatus === 400) {
+            } else if (err.status === 400) {
                 setErrMsg('Missing Username or Password');
-            } else if (err.originalStatus === 401) {
-                setErrMsg('Unauthorized');
+            } else if (err.status === 401) {
+                setErrMsg('Incorrect password');
             } else {
                 setErrMsg('Login Failed');
             }
@@ -59,7 +64,7 @@ function Login() {
                 <form onSubmit={handleSubmit} className="w-full">
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-gray-950 mb-1">Enter Email:</label>
-                        <input
+                        {/* <input
                             type="text"
                             id="username"
                             ref={userRef}
@@ -69,15 +74,25 @@ function Login() {
                             className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
                             placeholder="example@example.com"
                             required
+                        /> */}
+                        <input
+                            type="email"
+                            id="email"
+                            ref={userRef}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                            placeholder="example@example.com"
+                            required
                         />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-gray-950 mb-1" >Password:</label>
-                        <input
+                         <input
                             type="password"
                             id="password"
-                            onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
+                            onChange={(e) => setPwd(e.target.value)}
                             className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
                             placeholder="********"
                             required
