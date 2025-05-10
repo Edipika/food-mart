@@ -14,14 +14,14 @@ function CartPanel({ isOpen, setIsOpen }) {
 
     const [getCartDetails] = useGetCartProductsMutation();
     const products = useSelector(state => state.cartSlice?.products || []);
-
+    console.log("products", products)
     const fetchCartData = async () => {
         try {
             const response = await getCartDetails(products).unwrap();
             setCartData(response.cart);
             setCartItems(response.cartItems || []);
-            console.log("cart items backend response: ",response.cartItems)
-            
+            console.log("cart items backend response: ", response.cartItems)
+
         } catch (error) {
             console.error("Error fetching cart:", error);
         }
@@ -37,10 +37,10 @@ function CartPanel({ isOpen, setIsOpen }) {
         fetchCartData();
     };
     useEffect(() => {
-        console.log("products",products)
+        console.log("products", products)
         fetchCartData();
     }, [products])
-    console.log("cart items variable: ",cartItems);
+    console.log("cart items variable: ", cartItems);
     if (!isOpen) return null;
     return (
 
@@ -54,7 +54,7 @@ function CartPanel({ isOpen, setIsOpen }) {
                     <>
                         {cartItems
                             .filter((item) => item.quantity > 0)
-                            .map((item, index) => (                            
+                            .map((item, index) => (
                                 <div key={index} className="flex items-center justify-between border-b py-4">
                                     <img src={`${BASE_URL}/${item.Product?.image_path}` || ""} alt="Product" className="w-12 h-12 rounded" />
                                     <div className="flex-1 ml-4">

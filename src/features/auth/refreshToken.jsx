@@ -14,6 +14,7 @@ const refreshTokenQuery = async (api) => {
         if (refreshResult?.data) {
             // Update credentials in the Redux store
             const user = api.getState().auth.user;
+            console.log("user",user);
             api.dispatch(setCredentials({ ...refreshResult.data, user }));
             console.log("refresh token set");
             return refreshResult.data; // Return refreshed token data
