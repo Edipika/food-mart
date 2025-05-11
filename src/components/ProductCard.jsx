@@ -1,7 +1,5 @@
-import products from '../assets/products/coconut.webp';
 import { Link } from 'react-router-dom';
 import { BASE_URL } from "../app/api/axios";
-import { useState, useEffect } from 'react';
 import { saveTocart, } from '../features/cart/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 

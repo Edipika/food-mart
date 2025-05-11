@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import  { useState } from 'react';
 import logoMain from '../../assets/common/logoMain.png';
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart, AiOutlineDown } from 'react-icons/ai';
 import { logOut } from "../../features/auth/authSlice";
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
 import CartPanel from '../../features/cart/CartPanel';
-import totalProductQuantity from '../../features/cart/cartSlice';
 
 
 const Header = () => {
