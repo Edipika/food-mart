@@ -1,5 +1,3 @@
-import fruits from '../assets/category/category1/AFruits.webp';
-import atta from '../assets/category/category1/BAtta-Rice-Dal.webp';
 import { Link } from 'react-router-dom';
 import { useGetCategoryQuery } from '../features/category/categoryApi';
 import { BASE_URL } from '../../src/app/api/axios';
