@@ -14,7 +14,7 @@ function Login() {
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
- const token = useSelector(state => state.auth.token);
+    const token = useSelector(state => state.auth.token);
 
 
     const dispatch = useDispatch()
@@ -27,21 +27,26 @@ function Login() {
 
     useEffect(() => {
         setErrMsg('')
-    }, [ email, pwd])
+    }, [email, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             const userData = await login({ email, pwd, role }).unwrap()
             console.log("user data after logging in ", userData);
-            console.log("userData",userData)
+            console.log("userData", userData)
             dispatch(setCredentials({ ...userData }))
             setEmail('')
             setPwd('')
-           console.log('Token from Redux State:', token); 
-            navigate('/product')
+            console.log('Token from Redux State:', token);
+            if (userData.role == 1 || userData.role == 2) {
+                navigate('/product')
+            } else {
+                navigate('/')
+            }
+
         } catch (err) {
-            console.error("ERROR occoured during login",err); 
+            console.error("ERROR occoured during login", err);
             if (!err?.status) {
                 // isLoading: true until timeout occurs
                 setErrMsg('No Server Response');
@@ -88,7 +93,7 @@ function Login() {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-gray-950 mb-1" >Password:</label>
-                         <input
+                        <input
                             type="password"
                             id="password"
                             value={pwd}

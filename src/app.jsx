@@ -38,7 +38,7 @@ function App() {
 
 
       {/* Admin Routes */}
-      <Route element={<PersistLogin />}>
+      {/* <Route element={<PersistLogin />}> */}
         {/* both admin and superadmin allowed */}
         <Route element={<RequireAuth allowedRoles={[ROLES.admin, ROLES.superAdmin]} />}>
           <Route path="admin" element={<AdminList />} />
@@ -56,7 +56,7 @@ function App() {
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.superAdmin]} />}>
           <Route path="addAdmin" element={<AddAdmin />} />
         </Route> */}
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
