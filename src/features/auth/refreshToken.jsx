@@ -2,7 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'https://www.foodmart-api.dipikaepili.in',
     credentials: 'include', // Ensures cookies are sent
 });
 
