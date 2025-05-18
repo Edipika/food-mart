@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useGetCategoryQuery } from '../features/category/categoryApi';
-import { BASE_URL } from '../../src/app/api/axios';
+import { BASE_URL } from '../../src/app/api/apiSlice';
 import React from 'react';
 
 function CategoryCard() {

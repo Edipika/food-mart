@@ -4,14 +4,14 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useGetCategoryQuery } from '../features/category/categoryApi';
 import { useGetProductsByCategoryQuery } from '../features/products/productApi';
-import { BASE_URL } from "../app/api/axios";
+import { BASE_URL } from "../app/api/apiSlice";
 
 const ExploreCategories = () => {
     const { categoryId } = useParams();
     const [selectedCategory, setSelectedCategory] = useState()
     const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
     const { data: products, isLoading: productsLoading } = useGetProductsByCategoryQuery(selectedCategory);
-
+ console.log("BASE_URL",BASE_URL)
     useEffect(() => {
         if (categories && categories.length > 0) {
             const filteredCategories = categories.filter(category => category.parent_id === Number(categoryId));

@@ -1,17 +1,20 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import logoMain from '../../assets/common/logoMain.png';
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart, AiOutlineDown } from 'react-icons/ai';
 import { logOut } from "../../features/auth/authSlice";
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
 import CartPanel from '../../features/cart/CartPanel';
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenProfile, setIsOpenProfile] = useState(false);
     const dispatch = useDispatch();
-    const name = useSelector((state) => state.auth.name);
+    const { name, token } = useSelector((state) => state.auth);
     const [logout, { isLoading, isSuccess, isError }] = useLogoutMutation();
+
     const handleLogout = async () => {
         await logout();
         dispatch(logOut());
@@ -57,11 +60,11 @@ const Header = () => {
 
                     {/* Login Icon */}
                     <div className="flex-shrink-0 cursor-pointer"
-                        onClick={() => setIsOpen(!isOpen)}>
+                        onClick={() => setIsOpenProfile(!isOpenProfile)}>
                         <AiOutlineUser className="text-gray-700 mx-4" size={28} />
 
                         {/* Dropdown Menu */}
-                        {isOpen && (
+                        {/* {isOpenProfile && (
                             <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-2">
                                 <p className="px-4 py-2 text-gray-700 font-semibold">{name || "Guest"}</p>
                                 <hr />
@@ -71,6 +74,31 @@ const Header = () => {
                                 >
                                     Logout
                                 </button>
+                            </div>
+                        )}
+                    </div> */}
+                        {isOpenProfile && (
+                            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-2">
+                                {token ? (
+                                    <>
+                                        <p className="px-4 py-2 text-gray-700 font-semibold">{name}</p>
+                                        <hr />
+                                        <button
+                                            className="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </button>
+                                    </>
+                                ) : (
+                                    <Link
+                                        to="/login"
+                                        className="block px-4 py-2 text-blue-600 hover:bg-gray-100"
+                                        onClick={() => setIsOpenProfile(false)} // close dropdown after click
+                                    >
+                                        Login
+                                    </Link>
+                                )}
                             </div>
                         )}
                     </div>

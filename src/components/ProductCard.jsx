@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BASE_URL } from "../app/api/axios";
+import { BASE_URL } from "../app/api/apiSlice"; 
 import { saveTocart, } from '../features/cart/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 

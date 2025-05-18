@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useGetCartProductsMutation } from '../../features/cart/cartApi';
-import { BASE_URL } from '../../app/api/axios';
+import { BASE_URL } from '../../app/api/apiSlice';
 import { saveTocart } from '../../features/cart/cartSlice';
 import { useState } from 'react';
 

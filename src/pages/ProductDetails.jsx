@@ -2,7 +2,7 @@ import Layout from "../common/user/Layout";
 import { AiOutlineRight } from 'react-icons/ai';
 import { useParams } from "react-router-dom";
 import { useGetProductQuery } from '../features/products/productApi';
-import { BASE_URL } from "../app/api/axios";
+import { BASE_URL } from "../app/api/apiSlice";
 import { TbTruckDelivery } from "react-icons/tb";
 
 

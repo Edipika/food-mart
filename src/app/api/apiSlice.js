@@ -1,12 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
+const BASE_URL = 'https://www.foodmart-api.dipikaepili.in';
+// const BASE_URL = 'http://localhost:5000';
+
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://www.foodmart-api.dipikaepili.in',  
+    baseUrl: BASE_URL,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
-        console.log("Token from state from apiSlice:",token);
+        console.log("Token from state from apiSlice:", token);
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
@@ -22,7 +25,7 @@ const baseQuerywithReauth = async (args, api, extraOptions) => {
         console.log("sending refresh token ")
 
         const refreshResult = await baseQuery('/refresh', api, extraOptions)
-        console.log("refreshResult",refreshResult)
+        console.log("refreshResult", refreshResult)
 
         if (refreshResult?.data) {
             const user = api.getState().auth.user
@@ -43,3 +46,5 @@ export const apiSlice = createApi({
     baseQuery: baseQuerywithReauth,
     endpoints: (builder) => ({})
 })
+
+export { BASE_URL };

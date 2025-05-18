@@ -1,11 +1,9 @@
-import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import axios from '../../app/api/axios.js';
+import { useRegisterMutation } from './authApiSlice.js';
 import { useNavigate } from 'react-router-dom'
 
-const REGISTER_URL = '/register';
-
 function Register() {
+    const [registerUser, { isLoading, error }] = useRegisterMutation();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -23,13 +21,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ name, pwd, email, role }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
+            const response = await registerUser({ name, email, pwd, role }).unwrap();
             console.log(JSON.stringify(response?.data));
             setSuccess(true);
             //clear state and controlled inputs

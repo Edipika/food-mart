@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useGetCategoryQuery, useDeleteCategoryMutation } from './categoryApi'
-import { BASE_URL } from '../../app/api/axios';
+import { BASE_URL } from '../../app/api/apiSlice';
 import Layout from '../../common/admin/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';

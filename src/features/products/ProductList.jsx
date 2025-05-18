@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BASE_URL } from '../../app/api/axios';
+import { BASE_URL } from '../../app/api/apiSlice';
 import { useGetProductsQuery,useDeleteProductMutation } from './productApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
