@@ -39,13 +39,9 @@ function AddAdmin() {
             formData.append('email', admin.email);
             formData.append('pwd', admin.pwd);
             formData.append('role', admin.role);
-            // Log FormData content
-            // for (let [key, value] of formData.entries()) {
-            //     console.log(`${key}: ${value}`);
-            // }
 
            const response=  await addAdmin(formData);
-           console.log(response);
+        //    console.log(response);
         }
 
     };

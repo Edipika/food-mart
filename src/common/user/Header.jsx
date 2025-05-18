@@ -63,20 +63,6 @@ const Header = () => {
                         onClick={() => setIsOpenProfile(!isOpenProfile)}>
                         <AiOutlineUser className="text-gray-700 mx-4" size={28} />
 
-                        {/* Dropdown Menu */}
-                        {/* {isOpenProfile && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-2">
-                                <p className="px-4 py-2 text-gray-700 font-semibold">{name || "Guest"}</p>
-                                <hr />
-                                <button
-                                    className="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
-                                    onClick={handleLogout}
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        )}
-                    </div> */}
                         {isOpenProfile && (
                             <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-2">
                                 {token ? (

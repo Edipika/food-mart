@@ -1,5 +1,4 @@
 
-
 import { apiSlice } from "../../app/api/apiSlice";
 
 export const cartApi = apiSlice.injectEndpoints({
@@ -8,12 +7,11 @@ export const cartApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
       
             getCartProducts: builder.mutation({
-            query: (cart) => {
-                console.log("Sending request to cart API with:", cart); 
+            query: ({cart,user_id}) => {
                 return {
                     url: 'cart/update',
                     method: 'POST',
-                    body: { products: cart }
+                    body: { products: cart , user_id}
                 };
             },
             invalidatesTags: ['Cart']

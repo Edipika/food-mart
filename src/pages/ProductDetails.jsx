@@ -9,7 +9,6 @@ import { TbTruckDelivery } from "react-icons/tb";
 const ProductDetails = () => {
     const { productId } = useParams();
     const { data: item, isLoading } = useGetProductQuery(productId);
-    console.log(item);
     if (isLoading) return <div>Loading...</div>;
 
     return (

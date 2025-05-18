@@ -12,7 +12,7 @@ const PersistLogin = () => {
 
     useEffect(() => {
         const verifyRefreshToken = async () => {
-            console.log("Inside function");
+            // console.log("Inside function");
             try {
                 const api = {
                     dispatch,
@@ -20,7 +20,7 @@ const PersistLogin = () => {
                 };
                 // Use the standalone refresh token query
                 const response = await refreshTokenQuery(api);
-                console.log("Response from refresh endpoint1", response);
+                // console.log("Response from refresh endpoint1", response);
             } catch (err) {
                 console.error("Refresh token failed", err);
             } finally {

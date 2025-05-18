@@ -1,21 +1,22 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux'
-import { setCredentials } from './authSlice'
-import { useLoginMutation } from './authApiSlice'
+import { useDispatch } from 'react-redux';
+import { setCredentials } from './authSlice';
+import { useLoginMutation } from './authApiSlice';
+import { Link } from 'react-router-dom';
 
 function Login() {
 
     const userRef = useRef()
     const errRef = useRef()
-    const role = 3;
+    // const role = 3;
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
     const token = useSelector(state => state.auth.token);
-
+            //console.log("user role ", role); 
 
     const dispatch = useDispatch()
     //doudt on is loading
@@ -32,14 +33,15 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const userData = await login({ email, pwd, role }).unwrap()
-            console.log("user data after logging in ", userData);
-            console.log("userData", userData)
+
+            const userData = await login({ email, pwd, }).unwrap()
+            // console.log("user data after logging in ", userData);
+            // console.log("userData", userData)
             dispatch(setCredentials({ ...userData }))
             setEmail('')
             setPwd('')
-            console.log('Token from Redux State:', token);
-            if (userData.role == 1 || userData.role == 2) {
+            // console.log('Token from Redux State:', token);
+            if (userData.role == 1 || userData.role == 2) {  //1 and 2 are for admin and superadmin
                 navigate('/product')
             } else {
                 navigate('/')
@@ -69,17 +71,6 @@ function Login() {
                 <form onSubmit={handleSubmit} className="w-full">
                     <div className="mb-4">
                         <label htmlFor="username" className="block text-gray-950 mb-1">Enter Email:</label>
-                        {/* <input
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            value={user}
-                            onChange={(e) => setUser(e.target.value)}
-                            // autoComplete="off"
-                            className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                            placeholder="example@example.com"
-                            required
-                        /> */}
                         <input
                             type="email"
                             id="email"
@@ -111,6 +102,13 @@ function Login() {
                     >
                         Sign In
                     </button>
+
+                    <Link
+                        to="/register"
+                        className="block px-4 py-2 text-blue-600 hover:bg-gray-100"
+                    >
+                        Register
+                    </Link>
                 </form>
             </div>
         </div>

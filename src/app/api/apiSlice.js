@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
-const BASE_URL = 'https://www.foodmart-api.dipikaepili.in';
-// const BASE_URL = 'http://localhost:5000';
+// const BASE_URL = 'https://www.foodmart-api.dipikaepili.in';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 const baseQuery = fetchBaseQuery({
@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
-        console.log("Token from state from apiSlice:", token);
+        // console.log("Token from state from apiSlice:", token);
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
@@ -18,14 +18,14 @@ const baseQuery = fetchBaseQuery({
 });
 
 const baseQuerywithReauth = async (args, api, extraOptions) => {
-    console.log("sending login request")
+    // console.log("sending login request")
     let result = await baseQuery(args, api, extraOptions)
 
     if (result?.error?.originalStatus === 403) {
-        console.log("sending refresh token ")
+        // console.log("sending refresh token ")
 
         const refreshResult = await baseQuery('/refresh', api, extraOptions)
-        console.log("refreshResult", refreshResult)
+        // console.log("refreshResult", refreshResult)
 
         if (refreshResult?.data) {
             const user = api.getState().auth.user

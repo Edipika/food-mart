@@ -14,13 +14,13 @@ function CartPanel({ isOpen, setIsOpen }) {
 
     const [getCartDetails] = useGetCartProductsMutation();
     const products = useSelector(state => state.cartSlice?.products || []);
-    console.log("products", products)
+    const user_id = useSelector(state => state.auth?.user_id || []);
     const fetchCartData = async () => {
         try {
-            const response = await getCartDetails(products).unwrap();
+            const response = await getCartDetails({ cart: products, user_id }).unwrap();
             setCartData(response.cart);
             setCartItems(response.cartItems || []);
-            console.log("cart items backend response: ", response.cartItems)
+            // console.log("cart items backend response: ", response.cartItems)
 
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -37,10 +37,10 @@ function CartPanel({ isOpen, setIsOpen }) {
         fetchCartData();
     };
     useEffect(() => {
-        console.log("products", products)
+        // console.log("products", products)
         fetchCartData();
     }, [products])
-    console.log("cart items variable: ", cartItems);
+    // console.log("cart items variable: ", cartItems);
     if (!isOpen) return null;
     return (
 

@@ -45,15 +45,12 @@ function AddCategory() {
         navigate('/category')
     };
       const selectedCategory = useSelector((state) => state.editSlice.selectedItem);
-    //    const categorySlice = useSelector((state) => state.editSlice);
-    //    console.log("selectedCategory from Redux state:", selectedCategory);
-    //    console.log("categorySlice", categorySlice);
-
+ 
     useEffect(() => {
         // console.log("Redux State:", store.getState());
-        console.log("selectedCategory from Redux state:", selectedCategory);
+        // console.log("selectedCategory from Redux state:", selectedCategory);
         if (selectedCategory) {
-            console.log('Category from state:', selectedCategory);
+            // console.log('Category from state:', selectedCategory);
             setCategory({
                 parent_id: selectedCategory.parent_id || '',
                 name: selectedCategory.name || '',

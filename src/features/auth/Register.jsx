@@ -7,7 +7,7 @@ function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
-    const role = 2;//admins
+    const role = 3;//role_id 3 is for users and 1 and 2 for superadmin and admin
     const errRef = useRef();
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -22,7 +22,7 @@ function Register() {
         e.preventDefault();
         try {
             const response = await registerUser({ name, email, pwd, role }).unwrap();
-            console.log(JSON.stringify(response?.data));
+            // console.log(JSON.stringify(response?.data));
             setSuccess(true);
             //clear state and controlled inputs
             setName('');

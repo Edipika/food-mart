@@ -11,7 +11,7 @@ const ExploreCategories = () => {
     const [selectedCategory, setSelectedCategory] = useState()
     const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
     const { data: products, isLoading: productsLoading } = useGetProductsByCategoryQuery(selectedCategory);
- console.log("BASE_URL",BASE_URL)
+
     useEffect(() => {
         if (categories && categories.length > 0) {
             const filteredCategories = categories.filter(category => category.parent_id === Number(categoryId));

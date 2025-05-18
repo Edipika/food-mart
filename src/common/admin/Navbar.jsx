@@ -8,12 +8,6 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    
-    // const userEmail = useSelector(state => state.user.name);
-    // const status = useSelector(state => state.user.isLoggedIn);
-
-    // console.log(status)
-    // console.log(userEmail)
 
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
