@@ -1,34 +1,24 @@
 import React from 'react';
 import logoMain from '../../assets/common/logoMain.png';
+import { useGetCategoryQuery } from '../../features/category/categoryApi';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const { data: categories, isLoading: categoriesLoading } = useGetCategoryQuery();
   return (
     <footer className=''>
       <div className='grid grid-cols-5 grid-rows-5 gap-x-10 gap-y-1 m-11'>
         <div className='col-span-5 block font-semibold text-xl tracking-wider mb-3'>Categories</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
-        <div>hellooo</div>
+        {categories && categories.length > 0 ? (
+          categories
+            .filter(category => category.parent_id != null)
+            .map((category, index) => (
+               <Link to={`/explore/${category.id}`}>
+              <div key={index}>{category.name}</div></Link>
+            ))
+        ) : null}
+
+
       </div>
       <div className='border border-gray-100 p-4'>
         <div className='flex justify-around ml-5'>
