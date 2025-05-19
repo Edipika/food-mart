@@ -48,3 +48,8 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+
+// admin credentials 
+// password :Admin123 
+// email:dipikaepili85@gmail.com
