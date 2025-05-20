@@ -13,8 +13,8 @@ const Footer = () => {
           categories
             .filter(category => category.parent_id != null)
             .map((category, index) => (
-               <Link to={`/explore/${category.id}`}>
-              <div key={index}>{category.name}</div></Link>
+               <Link key={index} to={`/explore/${category.id}`}>
+              <div >{category.name}</div></Link>
             ))
         ) : null}
 
