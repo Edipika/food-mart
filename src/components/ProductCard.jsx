@@ -4,6 +4,8 @@ import { saveTocart, } from '../features/cart/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ProductCard({ item }) {// product card elemets that is there in explore categories page
+    console.log("item:", item)
+    
     const dispatch = useDispatch();
     const productId = item.id;
 

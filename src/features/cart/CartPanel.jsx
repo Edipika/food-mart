@@ -14,8 +14,8 @@ function CartPanel({ isOpen, setIsOpen }) {
     const dispatch = useDispatch();
 
     const [getCartDetails] = useGetCartProductsMutation();
-    const products = useSelector(state => state.cartSlice?.products || []);
-    const user_id = useSelector(state => state.auth?.user_id || []);
+    const products = useSelector(state => state.cartSlice?.products )|| [];
+    const user_id = useSelector(state => state.auth?.user_id )|| [];
     const fetchCartData = async () => {
         try {
             const response = await getCartDetails({ cart: products, user_id }).unwrap();
