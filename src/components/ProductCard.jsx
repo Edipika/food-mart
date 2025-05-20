@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import AddToCartButton from './AddToCartButton';
 
 function ProductCard({ item }) {// product card elemets that is there in explore categories page
-    console.log("item:", item)
+ 
     
     // const dispatch = useDispatch();
     const id = item.id;

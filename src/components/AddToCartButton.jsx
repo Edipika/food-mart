@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 function AddToCartButton({ product_id }) {
   const dispatch = useDispatch();
   const productId = product_id;
-  console.log("add to cart", productId);
+
   const quantity = useSelector((state) => {
     return (
       state.cartSlice?.products?.find(

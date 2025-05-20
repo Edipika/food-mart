@@ -5,13 +5,13 @@ import { useGetSearchProductsQuery } from "../features/products/productApi";
 
 const SearchPage = () => {
   const { query } = useParams();
-  console.log("query",query);
+  // console.log("query",query);
   const {
     data: products,
     isLoading,
     refetch,
   } = useGetSearchProductsQuery(query);
-  console.log("productsuseGetSearchProductsQuery",products);
+  // console.log("productsuseGetSearchProductsQuery",products);
   return (
     <div>
       <Layout>
