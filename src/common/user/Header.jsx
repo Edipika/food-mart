@@ -15,13 +15,16 @@ import { useGetSearchProductsQuery } from "../../features/products/productApi";
 
 const Header = () => {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchBoxRef = useRef(null);
   const {
     data: products,
     isResLoading,
     refetch,
-  } = useGetSearchProductsQuery(search);
+  } = useGetSearchProductsQuery(debouncedSearch, {
+    skip: debouncedSearch.trim() === "", // Don't run the query if search is empty
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const dispatch = useDispatch();
@@ -33,26 +36,21 @@ const Header = () => {
     setShowSuggestions(true);
   };
 
+  // Debounce logic
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300); // delay in ms
+
+    return () => {
+      clearTimeout(handler); // Clear timeout on cleanup
+    };
+  }, [search]);
+
   const handleLogout = async () => {
     await logout();
     dispatch(logOut());
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        searchBoxRef.current &&
-        !searchBoxRef.current.contains(event.target)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const totalQuantity = useSelector((state) => {
     return state.cartSlice?.products?.reduce(
@@ -89,8 +87,9 @@ const Header = () => {
               <input
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-2xl"
-                placeholder="Search..."
+                placeholder="Search products..."
                 value={search}
+                ref={searchBoxRef}
                 onChange={handleSearchChange}
               />
               <AiOutlineSearch
