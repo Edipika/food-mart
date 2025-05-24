@@ -60,42 +60,40 @@ const Header = () => {
   });
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-8xl  mx-auto px-4 sm:px-6 lg:px-8 ">
-        <div className="flex justify-between items-center py-4">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between py-4 gap-4">
+
           {/* Logo */}
-          <div className="flex-shrink-0 ml-10">
-            <img className="h-10 w-auto" src={logoMain} alt="Logo" />
+          <div className="flex items-center flex-shrink-0 ml-2 sm:ml-4">
+            <img className="h-8 sm:h-10 w-auto" src={logoMain} alt="Logo" />
           </div>
 
-          {/* location */}
-          <div className="p-2 px-4">
+          {/* Delivery Location */}
+          <div className="hidden lg:block p-2 px-4">
             <div className="flex items-center">
-              <span className="font-bold text-lg">Delivery in</span>
-              <span className="font-bold text-lg ml-1">20 Mins</span>
+              <span className="font-bold text-sm lg:text-lg">Delivery in</span>
+              <span className="font-bold text-sm lg:text-lg ml-1">20 Mins</span>
             </div>
             <div className="flex items-center">
-              <button className="text-gray-600 text-sm">
+              <button className="text-gray-600 text-xs lg:text-sm">
                 Lower Parel, Friends Colony, Hallow Pul, ...
               </button>
-              <AiOutlineDown className="ml-1 text-gray-600" size={16} />
+              <AiOutlineDown className="ml-1 text-gray-600" size={14} />
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="flex-1 mx-4 rounded-lg">
+          <div className="w-full order-3 lg:order-none lg:flex-1 lg:mx-4">
             <div className="relative">
               <input
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-2xl"
+                className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-2xl text-sm"
                 placeholder="Search products..."
                 value={search}
                 ref={searchBoxRef}
                 onChange={handleSearchChange}
               />
-              <AiOutlineSearch
-                className="absolute right-3 top-3 text-gray-500"
-                size={20}
-              />
+              <AiOutlineSearch className="absolute right-3 top-3 text-gray-500" size={18} />
 
               {isResLoading && (
                 <p className="absolute bg-white z-50 mt-2">Loading...</p>
@@ -111,10 +109,7 @@ const Header = () => {
                         setShowSuggestions(false);
                       }}
                     >
-                      <Link
-                        to={`/search/${product.name}`}
-                        className="block w-full h-full"
-                      >
+                      <Link to={`/search/${product.name}`} className="block w-full h-full">
                         {product.name}
                       </Link>
                     </li>
@@ -124,20 +119,17 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Login Icon */}
+          {/* Profile Icon */}
           <div
-            className="flex-shrink-0 cursor-pointer"
+            className="relative flex-shrink-0 cursor-pointer"
             onClick={() => setIsOpenProfile(!isOpenProfile)}
           >
-            <AiOutlineUser className="text-gray-700 mx-4" size={28} />
-
+            <AiOutlineUser className="text-gray-700 mx-2 sm:mx-4" size={24} />
             {isOpenProfile && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-2">
+              <div className="absolute right-0 mt-2 w-40 sm:w-48 bg-white border rounded-lg shadow-lg p-2 z-50">
                 {token ? (
                   <>
-                    <p className="px-4 py-2 text-gray-700 font-semibold">
-                      {name}
-                    </p>
+                    <p className="px-4 py-2 text-gray-700 font-semibold">{name}</p>
                     <hr />
                     <button
                       className="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
@@ -150,7 +142,7 @@ const Header = () => {
                   <Link
                     to="/login"
                     className="block px-4 py-2 text-blue-600 hover:bg-gray-100"
-                    onClick={() => setIsOpenProfile(false)} // close dropdown after click
+                    onClick={() => setIsOpenProfile(false)}
                   >
                     Login
                   </Link>
@@ -160,26 +152,19 @@ const Header = () => {
           </div>
 
           {/* Cart Icon */}
-          <div className="flex-shrink-0">
-            <div
-              className="relative cursor-pointer"
-              onClick={() => setIsOpen(true)}
-            >
-              <AiOutlineShoppingCart
-                className="text-gray-700 mr-10"
-                size={28}
-              />
-              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[8px] rounded-full px-2 py-1 mr-10">
-                {totalQuantity}
-              </span>
-            </div>
+          <div className="relative flex-shrink-0 cursor-pointer mr-2 sm:mr-4" onClick={() => setIsOpen(true)}>
+            <AiOutlineShoppingCart className="text-gray-700" size={24} />
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] rounded-full px-1.5 py-0.5">
+              {totalQuantity}
+            </span>
           </div>
-
-          {/* Side Panel Component */}
-          <CartPanel isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </div>
+
+      {/* Side Panel Component */}
+      <CartPanel isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
+
   );
 };
 

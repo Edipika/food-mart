@@ -25,51 +25,41 @@ const ExploreCategories = () => {
     if (productsLoading) return <p>Loading...</p>;
     // console.log("products fetched", products);
     return (
-        <div>
-            <Layout>
-                <div className="flex w-[85%] m-auto">
-                    {/* side panel to display subcategory */}
-                    <div className="w-1/6 flex flex-col border-r border-l-white h-screen overflow-y-auto scrollbar-hide">
-                        {categories && categories.length > 0 ? (
-                            categories
-                                .filter(category => category.parent_id === Number(categoryId))
-                                .map((category, index) => (
-                                    <div key={index} className="flex mb-2 px-3 cursor-pointer" onClick={() => setSelectedCategory(category.id)} >
-                                        <img
-                                            className="rounded-full w-12 h-12"
-                                            src={`${BASE_URL}${category.image_path}`}
-                                            alt={category.name}
-                                        />
-                                        <div className="font-semibold text-lg mt-5 ml-3">
-                                            {category.name}
-                                        </div>
-                                    </div>
-                                ))
+        <Layout>
+            <div className="flex flex-col lg:flex-row w-[90%] mx-auto">
+
+                {/* Sidebar for Subcategories */}
+                <div className="lg:w-1/5 w-full flex flex-row lg:flex-col overflow-x-auto lg:overflow-y-auto border-r lg:border-l-white gap-4 lg:gap-0 py-4 lg:h-screen">
+                    {categories?.filter(category => category.parent_id === Number(categoryId))?.map((category, index) => (
+                        <div key={index} className="flex items-center lg:mb-2 px-3 cursor-pointer min-w-fit lg:min-w-0" onClick={() => setSelectedCategory(category.id)}>
+                            <img
+                                className="rounded-full w-12 h-12"
+                                src={`${BASE_URL}${category.image_path}`}
+                                alt={category.name}
+                            />
+                            <div className="font-semibold text-base lg:text-lg ml-3">{category.name}</div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Products Grid */}
+                <div className="w-full lg:w-4/5 py-4">
+                    <h2 className="text-2xl font-semibold mb-6 px-4">Subcategory</h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4 px-4">
+                        {productsLoading ? (
+                            <p>Loading products...</p>
+                        ) : products?.length > 0 ? (
+                            products.map((item) => (
+                                <ProductCard key={item.id} item={item} />
+                            ))
                         ) : (
-                            <div>No categories available.</div>
+                            <p>No products found for this subcategory.</p>
                         )}
                     </div>
-
-                    {/* product display section */}
-                    <div className="w-full h-screen overflow-y-auto scrollbar-hide ">
-                        <div className="text-3xl font-semibold m-8">sub category </div>
-                        {/* item card */}
-                        <div className="grid grid-cols-6 gap-y-6 gap-x-2 m-5 p-3">
-                            {productsLoading ? (
-                                <p>Loading products...</p>
-                            ) : products && products?.length > 0 ? (
-                                products.map((item) => (
-                                    <ProductCard key={item.id} item={item} />
-
-                                ))
-                            ) : (
-                                <p>No products found for this subcategory.</p>
-                            )}
-                        </div>
-                    </div>
                 </div>
-            </Layout>
-        </div>
+            </div>
+        </Layout>
+
     );
 };
 
