@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
-import { useNavigate,Link } from 'react-router-dom'
-import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 import { setCredentials } from './authSlice';
 import { useLoginMutation } from './authApiSlice';
 
@@ -15,15 +15,15 @@ function Login() {
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
     const token = useSelector(state => state.auth.token);
-            //console.log("user role ", role); 
+    //console.log("user role ", role); 
 
     const dispatch = useDispatch()
     //doudt on is loading
     const [login, { isLoading }] = useLoginMutation();
 
-    useEffect(() => {
-        userRef.current.focus()
-    }, [])
+    // useEffect(() => {
+    //     userRef.current.focus()
+    // }, [])
 
     useEffect(() => {
         setErrMsg('')
@@ -64,51 +64,60 @@ function Login() {
         }
     }
     return (
-        <div className="h-screen w-full  flex justify-center items-center">
-            <div className="w-1/4 bg-orange-100 flex flex-col justify-center items-center p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold mb-4 text-gray-950">Login</h2>
-                <form onSubmit={handleSubmit} className="w-full">
-                    <div className="mb-4">
-                        <label htmlFor="username" className="block text-gray-950 mb-1">Enter Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            ref={userRef}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                            placeholder="example@example.com"
-                            required
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-gray-950 mb-1" >Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={pwd}
-                            onChange={(e) => setPwd(e.target.value)}
-                            className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
-                            placeholder="********"
-                            required
-                        />
+        
+        <div className="min-h-screen bg-blue-50 flex items-center justify-center px-4">
+            <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6">
+                {/* Logo and header */}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
 
+                        <div className="text-xl font-bold">
+                            <span className="text-gray-800">FOOD</span>
+                            <span className="text-yellow-500">MART</span>
+                            <div className="text-xs text-gray-500">GROCERY STORE</div>
+                        </div>
                     </div>
+                    <div className="text-sm font-medium text-gray-700">Delivery in 20 Mins</div>
+                </div>
+
+                {/* Form title */}
+                <h2 className="text-3xl font-bold text-center text-gray-800">Log In</h2>
+
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4" >
+                    <input
+                        type="email"
+                        id="email"
+                        ref={userRef}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        placeholder="example@example.com"
+                        required
+                    />
+                    <input
+                        type="password"
+                        id="password"
+                        value={pwd}
+                        onChange={(e) => setPwd(e.target.value)}
+                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="********"
+                        required
+                    />
                     <p ref={errRef} className={errMsg ? "text-red-600 text-sm font-medium" : "hidden"} aria-live="assertive">{errMsg}</p>
                     <button
                         type="submit"
-                        className="w-full p-2 bg-gray-950 text-slate-300 rounded-md hover:bg-gray-800 transition duration-200"
-                    >
-                        Sign In
+                        className="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition duration-300"                    >
+                        LOG IN
                     </button>
-
-                    <Link
-                        to="/register"
-                        className="block px-4 py-2 text-blue-600 hover:bg-gray-100"
-                    >
-                        Register
-                    </Link>
                 </form>
+
+                {/* Signup link */}
+                <Link
+                    to="/register"
+                    className="text-blue-700 font-semibold hover:underline"
+                >
+                    Register
+                </Link>
             </div>
         </div>
     );

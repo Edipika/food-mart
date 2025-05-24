@@ -44,9 +44,24 @@ function Register() {
         <>
             {success ? navigate('/login')
                 : (
-                    <div className="h-screen w-full  flex justify-center items-center">
-                        <div className="w-1/4 bg-orange-100 flex flex-col justify-center items-center p-6 rounded-lg shadow-lg">
-                            <h2 className="text-2xl font-bold mb-4 text-gray-950">Admin Register</h2>
+                    <div className="min-h-screen bg-blue-50 flex items-center justify-center px-4">
+                        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6">
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-2">
+                                    <div className="text-xl font-bold">
+                                        <span className="text-gray-800">FOOD</span>
+                                        <span className="text-yellow-500">MART</span>
+                                        <div className="text-xs text-gray-500">GROCERY STORE</div>
+                                    </div>
+                                </div>
+                                <div className="text-sm font-medium text-gray-700">Delivery in 7 Mins</div>
+                            </div>
+
+
+                            <h2 className="text-3xl font-bold text-center text-gray-800">Log In</h2>
+
+
                             <form onSubmit={handleSubmit} className="w-full">
                                 <div className="mb-4">
                                     <label htmlFor="username" className="block text-gray-950 mb-1">Enter Username:</label>
@@ -57,7 +72,7 @@ function Register() {
                                         onChange={(e) => setName(e.target.value)}
                                         value={name}
                                         required
-                                        className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         placeholder="example@example.com"
                                     />
                                 </div>
@@ -71,7 +86,7 @@ function Register() {
                                         onChange={(e) => setEmail(e.target.value)}
                                         value={email}
                                         required
-                                        className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         placeholder="example@example.com"
                                     />
                                 </div>
@@ -84,20 +99,21 @@ function Register() {
                                         onChange={(e) => setPwd(e.target.value)}
                                         value={pwd}
                                         required
-                                        className="w-full p-2 rounded-md bg-gray-200 text-gray-950 border border-gray-400 focus:border-slate-500 focus:ring focus:ring-slate-300 focus:ring-opacity-50"
+                                        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                         placeholder="********"
                                     />
                                 </div>
                                 <p ref={errRef} className={errMsg ? "text-red-600 text-sm font-medium" : "hidden"} aria-live="assertive">{errMsg}</p>
                                 <button
                                     type="submit"
-                                    className="w-full p-2 bg-gray-950 text-slate-300 rounded-md hover:bg-gray-800 transition duration-200"
+                                     className="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-lg transition duration-300"
                                 >
                                     Submit
                                 </button>
                             </form>
                         </div>
                     </div>
+
                 )}
 
         </>
