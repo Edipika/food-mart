@@ -2,18 +2,21 @@ import Veggies from '../assets/common/Veggies.png';
 import Smothie from '../assets/common/Smothie.png';
 import Bakery from '../assets/common/Bakery.png';
 import React from 'react';
+import { BASE_URL } from '../app/api/apiSlice';
 
 // Reusable Card Component
-const Card = ({ title, subtitle, imageUrl }) => {
+const Card = ({ title, subtitle, imageUrl,link  }) => {
     return (
         <div className="flex relative rounded-lg overflow-hidden w-full h-full min-w-0">
             <div className="p-5 flex flex-col justify-center space-y-2 z-10">
                 <h3 className="text-xl font-semibold">{title}</h3>
                 <span className="text-sm text-gray-500">SALE</span>
                 <h4 className="text-2xl font-bold">{subtitle}</h4>
-                <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 self-start">
-                    Shop Collection →
-                </button>
+                <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 self-start"
+               onClick={() => window.open(link, "_self")} // open in same tab
+                >
+                    Shop Collection → 
+                </button>   
             </div>
             <div className="absolute bottom-0 right-0 w-1/2 h-full hidden sm:block">
                 <img
@@ -46,7 +49,9 @@ function HeroSection() {
                                 <span className="mt-2">Fresh Smoothie & Summer Juices</span>
                             </div>
 
-                            <button className="mt-4 text-gray-700 border border-gray-400 py-2 px-4 rounded-md self-start">
+                            <button className="mt-4 text-gray-700 border border-gray-400 py-2 px-4 rounded-md self-start"
+                             onClick={() => window.open("http://localhost:5173/explore/6", "_self")}
+                            >
                                 SHOP NOW
                             </button>
                         </div>
@@ -64,11 +69,11 @@ function HeroSection() {
 
                 {/* Smaller Cards */}
                 <div className="col-span-1 lg:col-span-2 bg-green-100 rounded-lg w-full h-64 sm:h-72 lg:h-full min-w-0">
-                    <Card title="20% Off" subtitle="Fruits & Vegetables" imageUrl={Veggies} />
+                    <Card title="20% Off" subtitle="Fruits & Vegetables" imageUrl={Veggies}   link="http://localhost:5173/explore/3" />
                 </div>
 
                 <div className="col-span-1 lg:col-span-2 bg-yellow-100 rounded-lg w-full h-64 sm:h-72 lg:h-full min-w-0">
-                    <Card title="15% Off" subtitle="Baked Products" imageUrl={Bakery} />
+                    <Card title="15% Off" subtitle="Baked Products" imageUrl={Bakery}   link="http://localhost:5173/explore/4"/>
                 </div>
             </div>
         </div>
