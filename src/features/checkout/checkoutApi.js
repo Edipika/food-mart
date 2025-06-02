@@ -16,4 +16,5 @@ export const checkoutApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { usecheckoutMutation } = checkoutApi;
+// export const { usecheckoutMutation } = checkoutApi;
+export const { useCheckoutMutation } = checkoutApi;

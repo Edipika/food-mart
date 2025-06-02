@@ -2,6 +2,7 @@ import { useGetCartProductsMutation } from "../cart/cartApi";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../../app/api/apiSlice";
 import { useState, useEffect } from "react";
+import { useCheckoutMutation } from "./checkoutApi";
 
 function Checkout() {
   //showing cart details
@@ -33,9 +34,47 @@ function Checkout() {
   const taxRate = 0.18;
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
+  // console.log("total",total);
   //cart details end here
 
   //to send checkout form 
+  const [sendCheckoutForm] = useCheckoutMutation();
+
+  const [formData, setFormData] = useState({
+    user_id: user_id,
+    amount_from_frontend: total,
+    email: email,
+    firstName: "",
+    lastName: "",
+    address: "",
+    apartment: "",
+    city: "",
+    state: "",
+    pincode: "",
+    cardNumber: "",
+    expiry: "",
+    securityCode: "",
+    nameOnCard: "",
+    transactionStatus: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    for (const [key, value] of Object.entries(formData)) {
+      data.append(key, value);
+    }
+    await sendCheckoutForm(data);
+  };
+
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
@@ -56,52 +95,62 @@ function Checkout() {
               />
             </div>
 
-            <form action="" method="post">
+            <form onSubmit={handleSubmit}>
               {/* Delivery */}
-              <div>
-                <h2 className="font-semibold text-lg mb-2">Delivery</h2>
-                <select className="w-full border border-gray-300 rounded px-4 py-2 mb-2">
-                  <option>India</option>
-                </select>
-                <div className="grid grid-cols-2 gap-4 mb-2">
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    className="border border-gray-300 rounded px-4 py-2"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    className="border border-gray-300 rounded px-4 py-2"
-                  />
-                </div>
+              {/* <div> */}
+              <h2 className="font-semibold text-lg mb-2">Delivery</h2>
+              <select className="w-full border border-gray-300 rounded px-4 py-2 mb-2">
+                <option>India</option>
+              </select>
+              <div className="grid grid-cols-2 gap-4 mb-2">
                 <input
                   type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  placeholder="firstName"
+                  className="border border-gray-300 rounded px-4 py-2"
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  placeholder="lastName"
+                  className="border border-gray-300 rounded px-4 py-2"
+                />
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
                   placeholder="Address"
                   className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
                 />
-                <input
-                  type="text"
-                  placeholder="Apartment, suite, etc. (optional)"
-                  className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
-                />
+
                 <div className="grid grid-cols-3 gap-4 mb-2">
                   <input
                     type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
                     placeholder="City"
-                    defaultValue="Navi Mumbai"
                     className="border border-gray-300 rounded px-4 py-2"
                   />
                   <input
                     type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
                     placeholder="State"
-                    defaultValue="Maharashtra"
                     className="border border-gray-300 rounded px-4 py-2"
                   />
                   <input
                     type="text"
+                    name="pincode"
+                    value={formData.pincode}
+                    onChange={handleInputChange}
                     placeholder="PIN code"
-                    defaultValue="400703"
                     className="border border-gray-300 rounded px-4 py-2"
                   />
                 </div>
@@ -116,36 +165,51 @@ function Checkout() {
 
                 <div className="border-blue-300 rounded p-4 space-y-3">
                   <input
-                    type="text"
+                    type="number"
+                    name="cardNumber"
+                    value={formData.cardNumber}
+                    onChange={handleInputChange}
                     placeholder="Card number"
                     className="w-full border border-gray-300 rounded px-4 py-2"
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <input
-                      type="text"
+                        type="text"
+                       name="expiry"
+                      value={formData.expiry}
+                      onChange={handleInputChange}
                       placeholder="Expiration date (MM / YY)"
                       className="border border-gray-300 rounded px-4 py-2"
                     />
                     <input
-                      type="text"
+                      type="number"
+                       name="securityCode"
+                      value={formData.securityCode}
+                      onChange={handleInputChange}
                       placeholder="Security code"
                       className="border border-gray-300 rounded px-4 py-2"
                     />
                   </div>
                   <input
                     type="text"
+                     name="nameOnCard"
+                    value={formData.nameOnCard}
+                    onChange={handleInputChange}
                     placeholder="Name on card"
-                    defaultValue="dipika Epili"
                     className="w-full border border-gray-300 rounded px-4 py-2"
                   />
-                  <select className="w-full border border-gray-300 rounded px-4 py-2 mb-2">
-                    <option value="1" disabled>
-                      Select Transaction status
-                    </option>
-                    <option value="1">successful Transaction</option>
+                  <select
+                    name="transactionStatus"
+                    value={formData.transactionStatus}
+                    onChange={handleInputChange}
+                    className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
+                  >
+                    <option value="" disabled>Select Transaction status</option>
+                    <option value="1">Successful Transaction</option>
                     <option value="2">Declined</option>
                     <option value="3">Gateway Failure</option>
                   </select>
+
                 </div>
               </div>
 

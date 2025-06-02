@@ -7,6 +7,7 @@ import { userAdminApi } from "../features/userAdminManagement/userAdminApi";
 import editReducer from "../features/editSlice";
 import cartReducer from "../features/cart/cartSlice";
 import { cartApi } from "../features/cart/cartApi";
+import { checkoutApi } from "../features/checkout/checkoutApi";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // uses localStorage
 
@@ -23,6 +24,7 @@ const middlewareSet = new Set([
     productApi.middleware,
     userAdminApi.middleware,
     cartApi.middleware,
+    checkoutApi.middleware,
 
 ]);
 
@@ -33,6 +35,7 @@ export const store = configureStore({
         [productApi.reducerPath]: productApi.reducer,
         [userAdminApi.reducerPath]: userAdminApi.reducer,
         [cartApi.reducerPath]: cartApi.reducer,
+        [checkoutApi.reducerPath]: checkoutApi.reducer,
         // auth: authReducer,
         auth: persistedAuthReducer,
         editSlice: editReducer,
