@@ -1,7 +1,7 @@
 import { useGetCartProductsMutation } from "../cart/cartApi";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../../app/api/apiSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useCheckoutMutation } from "./checkoutApi";
 
 function Checkout() {
@@ -27,25 +27,31 @@ function Checkout() {
     fetchCartData();
   }, []);
 
-  const subtotal = cartItems
-    .filter((item) => item.quantity > 0)
-    .reduce((acc, item) => acc + item.quantity * item.price_at_purchase, 0);
+  const subtotal = useMemo(() => {
+    return cartItems
+      .filter((item) => item.quantity > 0)
+      .reduce((acc, item) => acc + item.quantity * item.price_at_purchase, 0);
+  }, [cartItems]);
 
-  const taxRate = 0.18;
-  const tax = subtotal * taxRate;
-  const total = subtotal + tax;
-  // console.log("total",total);
-  //cart details end here
+  const tax = useMemo(() => subtotal * 0.18, [subtotal]);
+  const total = useMemo(() => subtotal + tax, [subtotal, tax]);
 
-  //to send checkout form 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      amount_from_frontend: total,
+    }));
+  }, [total]);
+
+  //to send checkout form
   const [sendCheckoutForm] = useCheckoutMutation();
 
   const [formData, setFormData] = useState({
     user_id: user_id,
-    amount_from_frontend: total,
+    amount_from_frontend: 0,
     email: email,
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "", 
     address: "",
     apartment: "",
     city: "",
@@ -62,19 +68,31 @@ function Checkout() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
+      amount_from_frontend: total,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
+    console.log("user_id",formData.user_id)
+    const checkoutFormData = new FormData();
     for (const [key, value] of Object.entries(formData)) {
-      data.append(key, value);
+      checkoutFormData.append(key, value);
     }
-    await sendCheckoutForm(data);
-  };
+    // checkoutFormData.append("user_id", formData.user_id);
+    // checkoutFormData.append("amount_from_frontend", formData.amount_from_frontend);
+    // for (let pair of data.entries()) {
+    //   console.log(pair[0] + ": " + pair[1]);
+    // }
 
+    try {
+      const response = await sendCheckoutForm(formData).unwrap();
+      console.log("Checkout successful:", response);
+    } catch (error) {
+      console.error("Checkout error:", error);
+    }
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
@@ -113,8 +131,8 @@ function Checkout() {
                 />
                 <input
                   type="text"
-                  name="lastName"
-                  value={formData.lastName}
+                  name="last_name"
+                  value={formData.last_name}
                   onChange={handleInputChange}
                   placeholder="lastName"
                   className="border border-gray-300 rounded px-4 py-2"
@@ -174,8 +192,8 @@ function Checkout() {
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <input
-                        type="text"
-                       name="expiry"
+                      type="text"
+                      name="expiry"
                       value={formData.expiry}
                       onChange={handleInputChange}
                       placeholder="Expiration date (MM / YY)"
@@ -183,7 +201,7 @@ function Checkout() {
                     />
                     <input
                       type="number"
-                       name="securityCode"
+                      name="securityCode"
                       value={formData.securityCode}
                       onChange={handleInputChange}
                       placeholder="Security code"
@@ -192,7 +210,7 @@ function Checkout() {
                   </div>
                   <input
                     type="text"
-                     name="nameOnCard"
+                    name="nameOnCard"
                     value={formData.nameOnCard}
                     onChange={handleInputChange}
                     placeholder="Name on card"
@@ -204,12 +222,13 @@ function Checkout() {
                     onChange={handleInputChange}
                     className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
                   >
-                    <option value="" disabled>Select Transaction status</option>
+                    <option value="" disabled>
+                      Select Transaction status
+                    </option>
                     <option value="1">Successful Transaction</option>
                     <option value="2">Declined</option>
                     <option value="3">Gateway Failure</option>
                   </select>
-
                 </div>
               </div>
 
