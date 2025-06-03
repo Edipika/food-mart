@@ -3,8 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../../app/api/apiSlice";
 import { useState, useEffect, useMemo } from "react";
 import { useCheckoutMutation } from "./checkoutApi";
+import { clearCart } from "../cart/cartSlice";
+import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
+    const dispatch = useDispatch();
+      const navigate = useNavigate();
   //showing cart details
   const [getCartDetails] = useGetCartProductsMutation();
   const products = useSelector((state) => state.cartSlice?.products) || [];
@@ -44,24 +48,24 @@ function Checkout() {
   }, [total]);
 
   //to send checkout form
-  const [sendCheckoutForm] = useCheckoutMutation();
+  const [sendCheckoutForm, { isSuccess, isError, error, }] = useCheckoutMutation();
 
   const [formData, setFormData] = useState({
     user_id: user_id,
     amount_from_frontend: 0,
     email: email,
     first_name: "",
-    last_name: "", 
-    address: "",
-    apartment: "",
+    last_name: "",
+    address1: "",
+    address2: "",
     city: "",
     state: "",
     pincode: "",
-    cardNumber: "",
-    expiry: "",
-    securityCode: "",
-    nameOnCard: "",
-    transactionStatus: "",
+    card_number: "",
+    expiration_date: "",
+    cvv: "",
+    name_on_card: "",
+    transaction_status: "",
   });
 
   const handleInputChange = (e) => {
@@ -75,16 +79,11 @@ function Checkout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("user_id",formData.user_id)
+    console.log("user_id", formData.user_id)
     const checkoutFormData = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       checkoutFormData.append(key, value);
     }
-    // checkoutFormData.append("user_id", formData.user_id);
-    // checkoutFormData.append("amount_from_frontend", formData.amount_from_frontend);
-    // for (let pair of data.entries()) {
-    //   console.log(pair[0] + ": " + pair[1]);
-    // }
 
     try {
       const response = await sendCheckoutForm(formData).unwrap();
@@ -93,6 +92,13 @@ function Checkout() {
       console.error("Checkout error:", error);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+         dispatch(clearCart());
+      navigate('/order-success');
+    }
+  }, [isSuccess]);
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
@@ -103,6 +109,7 @@ function Checkout() {
           {/* Left Section */}
           <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow space-y-6">
             {/* Contact */}
+
             <div>
               <h2 className="font-semibold text-lg mb-2">Contact</h2>
               <input
@@ -123,8 +130,8 @@ function Checkout() {
               <div className="grid grid-cols-2 gap-4 mb-2">
                 <input
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="first_name"
+                  value={formData.first_name}
                   onChange={handleInputChange}
                   placeholder="firstName"
                   className="border border-gray-300 rounded px-4 py-2"
@@ -139,10 +146,18 @@ function Checkout() {
                 />
                 <input
                   type="text"
-                  name="address"
-                  value={formData.address}
+                  name="address1"
+                  value={formData.address1}
                   onChange={handleInputChange}
                   placeholder="Address"
+                  className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
+                />
+                <input
+                  type="text"
+                  name="address2"
+                  value={formData.address2}
+                  onChange={handleInputChange}
+                  placeholder="Apartment"
                   className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
                 />
 
@@ -184,8 +199,8 @@ function Checkout() {
                 <div className="border-blue-300 rounded p-4 space-y-3">
                   <input
                     type="number"
-                    name="cardNumber"
-                    value={formData.cardNumber}
+                    name="card_number"
+                    value={formData.card_number}
                     onChange={handleInputChange}
                     placeholder="Card number"
                     className="w-full border border-gray-300 rounded px-4 py-2"
@@ -193,16 +208,16 @@ function Checkout() {
                   <div className="grid grid-cols-2 gap-4">
                     <input
                       type="text"
-                      name="expiry"
-                      value={formData.expiry}
+                      name="expiration_date"
+                      value={formData.expiration_date}
                       onChange={handleInputChange}
                       placeholder="Expiration date (MM / YY)"
                       className="border border-gray-300 rounded px-4 py-2"
                     />
                     <input
                       type="number"
-                      name="securityCode"
-                      value={formData.securityCode}
+                      name="cvv"
+                      value={formData.cvv}
                       onChange={handleInputChange}
                       placeholder="Security code"
                       className="border border-gray-300 rounded px-4 py-2"
@@ -210,15 +225,15 @@ function Checkout() {
                   </div>
                   <input
                     type="text"
-                    name="nameOnCard"
-                    value={formData.nameOnCard}
+                    name="name_on_card"
+                    value={formData.name_on_card}
                     onChange={handleInputChange}
                     placeholder="Name on card"
                     className="w-full border border-gray-300 rounded px-4 py-2"
                   />
                   <select
-                    name="transactionStatus"
-                    value={formData.transactionStatus}
+                    name="transaction_status"
+                    value={formData.transaction_status}
                     onChange={handleInputChange}
                     className="w-full border border-gray-300 rounded px-4 py-2 mb-2"
                   >
@@ -231,7 +246,11 @@ function Checkout() {
                   </select>
                 </div>
               </div>
-
+              {(isError) && (
+                <span className="text-red-500 text-sm">
+                  {error?.data?.message || 'An error occurred'}
+                </span>
+              )}
               <button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded mt-4"

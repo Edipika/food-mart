@@ -25,11 +25,15 @@ const cartSlice = createSlice({
                 state.products.push({ productId, quantity });
             }
             // state.totalQuantity = state.products.reduce((sum, product) => sum + product.quantity, 0);
-           saveCartToLocalStorage(state.products);
+            saveCartToLocalStorage(state.products);
         },
+        clearCart(state) {
+            state.products = [];
+            localStorage.removeItem('cart');
+        }
     }
 });
 
-export const { saveTocart} = cartSlice.actions;
+export const { saveTocart,clearCart } = cartSlice.actions;
 // export const selectCartProducts = (state) => state.cart.products;
 export default cartSlice.reducer;
