@@ -15,8 +15,8 @@ import ExploreCategories from "./pages/ExploreCategories.jsx";
 import PersistLogin from "./features/auth/PersistLogin.jsx";
 import RequireAuth from "./features/auth/RequireAuth.jsx";
 import Unauthorized from "./features/auth/Unauthorized.jsx";
-import OrderConfirmation from "./features/checkout/OrderConfirmation.jsx";
 import Checkout from "./features/checkout/Checkout.jsx";
+import OrderDetails from "./features/checkout/OrderDetails.jsx";
 
 const ROLES = {
   superAdmin: 1,
@@ -37,7 +37,7 @@ function App() {
       <Route path="productDetails/:productId" element={<ProductDetails />} />
       <Route path="search/:query" element={<SearchPage />} />
 
-      <Route path="order-success" element={<OrderConfirmation />} />
+      <Route path="orders" element={<OrderDetails />} />
        <Route path="checkout" element={<Checkout />} />
 
       <Route path="unauthorized" element={<Unauthorized />} />

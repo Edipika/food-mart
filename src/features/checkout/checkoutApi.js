@@ -13,8 +13,14 @@ export const checkoutApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["checkout"],
     }),
+
+    getOrders: builder.query({
+      query: () => "products/show",
+      providedTags: ["product"],
+    }),
+    
   }),
 });
 
 // export const { usecheckoutMutation } = checkoutApi;
-export const { useCheckoutMutation } = checkoutApi;
+export const { useCheckoutMutation, useGetOrdersQuery } = checkoutApi;
