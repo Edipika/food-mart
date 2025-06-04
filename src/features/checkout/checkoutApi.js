@@ -15,8 +15,8 @@ export const checkoutApi = apiSlice.injectEndpoints({
     }),
 
     getOrders: builder.query({
-      query: () => "products/show",
-      providedTags: ["product"],
+      query: (userId) => `/orders?userId=${userId}`,
+      providedTags: ["checkout"],
     }),
     
   }),

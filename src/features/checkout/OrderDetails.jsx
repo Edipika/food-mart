@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useGetOrdersQuery } from './checkoutApi';
+import { useSelector } from 'react-redux';
+
 
 function OrderDetails() {
   const [orders, setOrders] = useState([]);
- const { data: ordersDetails, isLoading, refetch } = useGetOrdersQuery();
+  const userId = useSelector(state => state.auth?.user_id) || [];
+  console.log(userId);
+  const { data: ordersDetails, isLoading, refetch } = useGetOrdersQuery(userId);
+  useEffect(() => {
+    if (ordersDetails) {
+      setOrders(ordersDetails);
+    }
+  }, [ordersDetails]);
+  console.log(orders);
+
   // Replace with real API call
   useEffect(() => {
     const fetchOrders = async () => {
@@ -48,7 +59,7 @@ function OrderDetails() {
 
     fetchOrders();
   }, []);
-  
+
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="max-w-5xl mx-auto p-4">
