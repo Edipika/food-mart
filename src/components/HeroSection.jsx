@@ -50,7 +50,8 @@ function HeroSection() {
                             </div>
 
                             <button className="mt-4 text-gray-700 border border-gray-400 py-2 px-4 rounded-md self-start"
-                             onClick={() => window.open("http://localhost:5173/explore/6", "_self")}
+                            //  onClick={() => window.open("http://localhost:5173/explore/6", "_self")}
+                              onClick={() => window.open(`${window.location.origin}/explore/6`, "_self")}
                             >
                                 SHOP NOW
                             </button>
@@ -69,11 +70,16 @@ function HeroSection() {
 
                 {/* Smaller Cards */}
                 <div className="col-span-1 lg:col-span-2 bg-green-100 rounded-lg w-full h-64 sm:h-72 lg:h-full min-w-0">
-                    <Card title="20% Off" subtitle="Fruits & Vegetables" imageUrl={Veggies}   link="http://localhost:5173/explore/3" />
+                    <Card title="20% Off" subtitle="Fruits & Vegetables" imageUrl={Veggies}  
+                        link={`${window.location.origin}/explore/3`}/>
+                    {/* link="http://localhost:5173/explore/3" /> */}
                 </div>
 
                 <div className="col-span-1 lg:col-span-2 bg-yellow-100 rounded-lg w-full h-64 sm:h-72 lg:h-full min-w-0">
-                    <Card title="15% Off" subtitle="Baked Products" imageUrl={Bakery}   link="http://localhost:5173/explore/4"/>
+                    <Card title="15% Off" subtitle="Baked Products" imageUrl={Bakery}  
+                     link={`${window.location.origin}/explore/4`}
+  />
+                    {/* link="http://localhost:5173/explore/4"/> */}
                 </div>
             </div>
         </div>
