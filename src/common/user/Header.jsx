@@ -10,10 +10,11 @@ import {
 import { logOut } from "../../features/auth/authSlice";
 import { useLogoutMutation } from "../../features/auth/authApiSlice";
 import CartPanel from "../../features/cart/CartPanel";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { useGetSearchProductsQuery } from "../../features/products/productApi";
 
 const Header = () => {
+  const navigate = useNavigate(); 
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -130,7 +131,13 @@ const Header = () => {
                 {token ? (
                   <>
                     <p className="px-4 py-2 text-gray-700 font-semibold">{name}</p>
-                    <hr />
+                     <button
+                      className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={() => navigate('/orders')}
+                    >
+                      orders
+                    </button>
+                    {/* <hr /> */}
                     <button
                       className="w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100"
                       onClick={handleLogout}

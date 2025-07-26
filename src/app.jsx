@@ -36,11 +36,19 @@ function App() {
       <Route path="explore/:categoryId" element={<ExploreCategories />} />
       <Route path="productDetails/:productId" element={<ProductDetails />} />
       <Route path="search/:query" element={<SearchPage />} />
-
-      <Route path="orders" element={<OrderDetails />} />
-       <Route path="checkout" element={<Checkout />} />
-
       <Route path="unauthorized" element={<Unauthorized />} />
+
+      {/* user protected routes */}
+      <Route
+        element={
+          <RequireAuth
+            allowedRoles={[ROLES.user, ROLES.admin, ROLES.superAdmin]}
+          />
+        }
+      >
+        <Route path="orders" element={<OrderDetails />} />
+        <Route path="checkout" element={<Checkout />} />
+      </Route>
 
       {/* Admin Routes */}
       {/* <Route element={<PersistLogin />}> */}
