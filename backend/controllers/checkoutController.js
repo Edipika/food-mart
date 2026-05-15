@@ -1,4 +1,4 @@
-// controllers/checkoutController.js
+// This controller handles the checkout process, including order creation and fetching order details.
 const { sendConfirmationMail } = require("../config/mail");
 const {
   User,
